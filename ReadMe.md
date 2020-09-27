@@ -1,6 +1,6 @@
-# Fiber Starter
+# Fiber Todo - Based on Fiber Starter
 
-Easily start your new Go Lang project using Server Side rendering, and cookie based auth.
+A server side rendered todo list app, using golang and js
 
 ### Tech Used
 
