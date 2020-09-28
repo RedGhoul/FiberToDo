@@ -9,5 +9,5 @@ type TodoList struct {
 	Title         string         `josn:"title"`
 	IsDone        bool           `json:"isDone"`
 	ToDoListItems []TodoListItem `gorm:"ForeignKey:TodoListRefer"`
-	UserRefer     uint           `json:"userRefer"`
+	UserRefer     uint           `json:"UserRefer"`
 }

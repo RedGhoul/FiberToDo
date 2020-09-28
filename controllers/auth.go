@@ -7,7 +7,7 @@ import (
 )
 
 func ShowRegisterForm(c *fiber.Ctx) {
-	if err := c.Render("Auth/register", fiber.Map{}); err != nil {
+	if err := c.Render("Auth/register", fiber.Map{}, "layouts/main"); err != nil {
 		c.Status(500).Send(err.Error())
 	}
 }
@@ -29,7 +29,7 @@ func PostRegisterForm(c *fiber.Ctx) {
 }
 
 func ShowLoginForm(c *fiber.Ctx) {
-	if err := c.Render("Auth/login", fiber.Map{}); err != nil {
+	if err := c.Render("Auth/login", fiber.Map{}, "layouts/main"); err != nil {
 		c.Status(500).Send(err.Error())
 	}
 }
@@ -40,7 +40,7 @@ func PostLoginForm(c *fiber.Ctx) {
 	didmatch, curuser := utils.MatchPasswords(username, password)
 	if didmatch {
 		utils.SetAuthCookie(curuser, c)
-		c.Send("You should be logged in successfully!")
+		c.Redirect("/ListTodoLists")
 	} else {
 		c.Send("The entered details do not match our records.")
 	}

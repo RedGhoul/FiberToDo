@@ -9,5 +9,5 @@ type TodoListItem struct {
 	Title         string `josn:"title"`
 	Author        string `json:"author"`
 	Rating        int    `json:"rating"`
-	TodoListRefer uint   `json:"todoListRefer"`
+	TodoListRefer uint   `json:"TodoListRefer"`
 }

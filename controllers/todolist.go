@@ -4,11 +4,13 @@ import (
 	"github.com/gofiber/fiber"
 )
 
+var HomePage = "/TodoLists"
+
 /*
 	Show a list of todo lists you have
 */
-func ShowListOfTodoListsPage(c *fiber.Ctx) {
-	if err := c.Render("ToDo/index", fiber.Map{}, "layouts/main"); err != nil {
+func ShowListOfTodoLists(c *fiber.Ctx) {
+	if err := c.Render("ToDoList/index", fiber.Map{}, "layouts/main"); err != nil {
 		c.Status(500).Send(err.Error())
 	}
 }
@@ -16,29 +18,47 @@ func ShowListOfTodoListsPage(c *fiber.Ctx) {
 /*
 	Show a todo list
 */
-func ShowTodoListPage(c *fiber.Ctx) {
-	c.Send("ShowTodoListPage")
+func ShowTodoList(c *fiber.Ctx) {
+	if err := c.Render("ToDoList/todolist",
+		fiber.Map{"ToDoListId": c.Params("Id")},
+		"layouts/main"); err != nil {
+		c.Status(500).Send(err.Error())
+	}
 }
 
 /*
 	Delete a todo list
 */
 func DeleteTodoList(c *fiber.Ctx) {
-	if err := c.Render("ToDo/todolist", fiber.Map{}, "layouts/main"); err != nil {
-		c.Status(500).Send(err.Error())
-	}
+	c.JSON("OK")
 }
 
 /*
 	Create a todo list
 */
 func CreateNewToDoList(c *fiber.Ctx) {
-	c.Send("CreateNewToDoList")
+	todolistname := c.FormValue("todolistname")
+	if len(todolistname) == 0 {
+		c.Redirect("/CreateNewToDoList")
+	}
+	db.
+		c.JSON("OK")
+}
+
+/*
+	Get a todo list form
+*/
+func GetTodoListForm(c *fiber.Ctx) {
+	if err := c.Render("ToDoList/createToDoList",
+		fiber.Map{},
+		"layouts/main"); err != nil {
+		c.Status(500).Send(err.Error())
+	}
 }
 
 /*
 	Update a todo list
 */
 func UpdateNewToDoList(c *fiber.Ctx) {
-	c.Send("CreateNewToDoList")
+	c.JSON("OK")
 }

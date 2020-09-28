@@ -1,4 +1,4 @@
-{% include "views/partials/header.django" %}
+
 <form action="/Login" method="post">
   <label for="fname">username:</label><br>
   <input type="text" id="username" name="username" value="John"><br>
@@ -7,5 +7,3 @@
   <input type="submit" value="Submit">
 </form> 
 
-
-{% include "views/partials/footer.django" %}

@@ -1,0 +1,11 @@
+<script  type="text/javascript" src="/asset/site.js"></script>
+<form action="/CreateNewToDoList" method="post">
+  <label for="todolistname">ToDo List Name:</label>
+  <br>
+  <input type="text" id="todolistname" name="todolistname" value="Enter Name Here">
+  <br>
+  <br>
+  <br>
+  <input type="submit" value="Submit">
+</form> 
+
