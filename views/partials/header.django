@@ -6,27 +6,32 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/TodoLists/1">TodoLists1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/ListTodoLists">TodoLists</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/CreateNewToDoList">Create New TodoList</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/Secrect">Secrect</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/Logout">Logout</a>
-        </li>
+      <h1>HIIII {{signedIn}}<h1>
+        {% if signedIn %}
+          <li class="nav-item">
+            <a class="nav-link" href="/TodoList/1">TodoLists1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/TodoLists">TodoLists</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/CreateNewToDoList">Create New TodoList</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/Secrect">Secrect</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/Logout">Logout</a>
+          </li>
+        {% else %}
+        
          <li class="nav-item">
           <a class="nav-link" href="/Login">Login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/Register">Register</a>
         </li>
+         {% endif %}
       </ul>
       <form class="form-inline mt-2 mt-md-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

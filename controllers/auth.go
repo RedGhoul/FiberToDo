@@ -40,7 +40,7 @@ func PostLoginForm(c *fiber.Ctx) {
 	didmatch, curuser := utils.MatchPasswords(username, password)
 	if didmatch {
 		utils.SetAuthCookie(curuser, c)
-		c.Redirect("/ListTodoLists")
+		c.Redirect("/TodoLists")
 	} else {
 		c.Send("The entered details do not match our records.")
 	}

@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"github.com/RedGhoul/fibertodo/repos"
+	"github.com/RedGhoul/fibertodo/utils"
 	"github.com/gofiber/fiber"
 )
 
@@ -10,9 +12,16 @@ var HomePage = "/TodoLists"
 	Show a list of todo lists you have
 */
 func ShowListOfTodoLists(c *fiber.Ctx) {
-	if err := c.Render("ToDoList/index", fiber.Map{}, "layouts/main"); err != nil {
-		c.Status(500).Send(err.Error())
+
+	if userID := utils.GetUserId(c); userID != 0 {
+		todolists := repos.GetAllTodoListsByUserId(userID)
+		if err := c.Render("ToDoList/index", fiber.Map{"todolists": todolists}, "layouts/main"); err != nil {
+			c.Status(500).Send(err.Error())
+		}
+	} else {
+		c.Redirect(HomePage)
 	}
+
 }
 
 /*
@@ -30,6 +39,7 @@ func ShowTodoList(c *fiber.Ctx) {
 	Delete a todo list
 */
 func DeleteTodoList(c *fiber.Ctx) {
+	//todoListId := c.Params("Id")
 	c.JSON("OK")
 }
 
@@ -41,8 +51,12 @@ func CreateNewToDoList(c *fiber.Ctx) {
 	if len(todolistname) == 0 {
 		c.Redirect("/CreateNewToDoList")
 	}
-	db.
-		c.JSON("OK")
+	if userID := utils.GetUserId(c); userID != 0 {
+		repos.CreateTodoList(todolistname, userID)
+		c.Redirect(HomePage)
+	} else {
+		c.Redirect("/CreateNewToDoList")
+	}
 }
 
 /*
@@ -59,6 +73,6 @@ func GetTodoListForm(c *fiber.Ctx) {
 /*
 	Update a todo list
 */
-func UpdateNewToDoList(c *fiber.Ctx) {
+func UpdateToDoList(c *fiber.Ctx) {
 	c.JSON("OK")
 }

@@ -7,6 +7,7 @@ import (
 )
 
 func SetupRoutes(app *fiber.App) {
+	app.Use(utils.AddLocals())
 	setupAuthRoutes(app)
 	setupBasicRoutes(app)
 	app.Use(utils.CheckAuth())
@@ -31,10 +32,10 @@ func setupHiddenRoutes(app *fiber.App) {
 }
 
 func setupTodoListRoutes(app *fiber.App) {
-	app.Get("/ListTodoLists", controllers.ShowListOfTodoLists)
+	app.Get("/TodoLists", controllers.ShowListOfTodoLists)
 	app.Get("/CreateNewToDoList", controllers.GetTodoListForm)
 	app.Post("/CreateNewToDoList", controllers.CreateNewToDoList)
-	app.Get("/TodoLists/:Id", controllers.ShowTodoList)
-	app.Put("/TodoLists/:Id", controllers.UpdateNewToDoList)
-	app.Delete("/TodoLists/:Id", controllers.DeleteTodoList)
+	app.Get("/TodoList/:Id", controllers.ShowTodoList)
+	app.Put("/UpdateTodoList/:Id", controllers.UpdateToDoList)
+	app.Delete("/DeleteTodoList/:Id", controllers.DeleteTodoList)
 }

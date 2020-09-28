@@ -1,11 +1,8 @@
 package repos
 
 import (
-	"log"
-
 	"github.com/RedGhoul/fibertodo/database"
 	"github.com/RedGhoul/fibertodo/models"
-	"github.com/RedGhoul/fibertodo/providers"
 )
 
 func GetAllTodoLists() []models.TodoList {
@@ -14,6 +11,15 @@ func GetAllTodoLists() []models.TodoList {
 	//"&" generates a pointer
 	//Find fill in that book array
 	db.Find(&todolists)
+	return todolists
+}
+
+func GetAllTodoListsByUserId(userId uint) []models.TodoList {
+	db := database.DBConn
+	var todolists []models.TodoList
+	//"&" generates a pointer
+	//Find fill in that book array
+	db.Where("user_refer = ?", userId).Find(&todolists)
 	return todolists
 }
 
@@ -27,31 +33,23 @@ func GetTodolistByID(todoId int) models.TodoList {
 	return todolist
 }
 
-func CreateUser(username string, email string, password string) bool {
+func CreateTodoList(title string, userId uint) {
 	db := database.DBConn
-	newHash, err := providers.HashProvider().CreateHash(password)
-	if err != nil {
-		log.Println("failed to create user")
-		return false
-	}
-	var newUser models.User
-	newUser.Email = username
-	newUser.Username = username
-	newUser.Password = newHash
-	db.Create(&newUser)
-	return true
+	var newTodoList models.TodoList
+	newTodoList.Title = title
+	newTodoList.UserRefer = userId
+	db.Create(&newTodoList)
 }
 
-func DeleteUser(userId int) bool {
+func DeleteTodoList(todolistId uint, userId uint) bool {
 	db := database.DBConn
 
-	var curUser models.User
-
-	db.First(&curUser, userId)
-	if curUser.ID == uint(userId) {
+	var curTodoList models.TodoList
+	db.First(&curTodoList, todolistId).Where("userRefer = ?", userId)
+	if curTodoList.ID == 0 {
 		return false
 	}
 
-	db.Delete(&curUser)
+	db.Delete(&curTodoList)
 	return true
 }
