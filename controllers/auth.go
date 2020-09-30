@@ -7,9 +7,7 @@ import (
 )
 
 func ShowRegisterForm(c *fiber.Ctx) {
-	if err := c.Render("Auth/register", fiber.Map{}, "layouts/main"); err != nil {
-		c.Status(500).Send(err.Error())
-	}
+	utils.Render(c, "Auth/register", "layouts/main", fiber.Map{})
 }
 
 func PostRegisterForm(c *fiber.Ctx) {
@@ -29,9 +27,7 @@ func PostRegisterForm(c *fiber.Ctx) {
 }
 
 func ShowLoginForm(c *fiber.Ctx) {
-	if err := c.Render("Auth/login", fiber.Map{}, "layouts/main"); err != nil {
-		c.Status(500).Send(err.Error())
-	}
+	utils.Render(c, "Auth/login", "layouts/main", fiber.Map{})
 }
 
 func PostLoginForm(c *fiber.Ctx) {
@@ -46,9 +42,9 @@ func PostLoginForm(c *fiber.Ctx) {
 	}
 }
 
-func PostLogoutForm(c *fiber.Ctx) {
+func Logout(c *fiber.Ctx) {
 	if utils.RemoveCookie(c) {
-		c.Send("You are now logged out.")
+		c.Redirect("/")
 	}
 	c.Redirect(string(c.Fasthttp.Request.Header.Referer()))
 }

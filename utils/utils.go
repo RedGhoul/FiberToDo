@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/RedGhoul/fibertodo/models"
@@ -46,16 +47,6 @@ func GetUserId(c *fiber.Ctx) uint {
 	}
 	return 0
 }
-func AddLocals() fiber.Handler {
-	return func(c *fiber.Ctx) {
-		// Filter request to skip middleware
-		if providers.IsAuthenticated(c) {
-			c.Locals("signedIn", true)
-		}
-		c.Locals("signedIn", false)
-		c.Next()
-	}
-}
 
 func CheckAuth() fiber.Handler {
 	return func(c *fiber.Ctx) {
@@ -68,4 +59,10 @@ func CheckAuth() fiber.Handler {
 	}
 }
 
-func render()
+func Render(c *fiber.Ctx, pageName string, layoutName string, data fiber.Map) {
+	data["signedIn"] = providers.IsAuthenticated(c)
+	fmt.Println(data)
+	if err := c.Render(pageName, data, layoutName); err != nil {
+		c.Status(500).Send(err.Error())
+	}
+}

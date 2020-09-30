@@ -15,9 +15,7 @@ func ShowListOfTodoLists(c *fiber.Ctx) {
 
 	if userID := utils.GetUserId(c); userID != 0 {
 		todolists := repos.GetAllTodoListsByUserId(userID)
-		if err := c.Render("ToDoList/index", fiber.Map{"todolists": todolists}, "layouts/main"); err != nil {
-			c.Status(500).Send(err.Error())
-		}
+		utils.Render(c, "ToDoList/index", "layouts/main", fiber.Map{"todolists": todolists})
 	} else {
 		c.Redirect(HomePage)
 	}
@@ -28,11 +26,7 @@ func ShowListOfTodoLists(c *fiber.Ctx) {
 	Show a todo list
 */
 func ShowTodoList(c *fiber.Ctx) {
-	if err := c.Render("ToDoList/todolist",
-		fiber.Map{"ToDoListId": c.Params("Id")},
-		"layouts/main"); err != nil {
-		c.Status(500).Send(err.Error())
-	}
+	utils.Render(c, "ToDoList/todolist", "layouts/main", fiber.Map{"ToDoListId": c.Params("Id")})
 }
 
 /*
@@ -63,11 +57,7 @@ func CreateNewToDoList(c *fiber.Ctx) {
 	Get a todo list form
 */
 func GetTodoListForm(c *fiber.Ctx) {
-	if err := c.Render("ToDoList/createToDoList",
-		fiber.Map{},
-		"layouts/main"); err != nil {
-		c.Status(500).Send(err.Error())
-	}
+	utils.Render(c, "ToDoList/createToDoList", "layouts/main", fiber.Map{})
 }
 
 /*

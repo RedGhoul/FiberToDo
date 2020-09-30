@@ -7,7 +7,6 @@ import (
 )
 
 func SetupRoutes(app *fiber.App) {
-	app.Use(utils.AddLocals())
 	setupAuthRoutes(app)
 	setupBasicRoutes(app)
 	app.Use(utils.CheckAuth())
@@ -17,7 +16,7 @@ func SetupRoutes(app *fiber.App) {
 func setupAuthRoutes(app *fiber.App) {
 	app.Get("/Login", controllers.ShowLoginForm)
 	app.Post("/Login", controllers.PostLoginForm)
-	app.Get("/Logout", controllers.PostLogoutForm)
+	app.Get("/Logout", controllers.Logout)
 	app.Get("/Register", controllers.ShowRegisterForm)
 	app.Post("/Register", controllers.PostRegisterForm)
 }
