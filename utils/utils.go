@@ -42,7 +42,6 @@ func RemoveCookie(c *fiber.Ctx) bool {
 func GetUserId(c *fiber.Ctx) uint {
 	if providers.IsAuthenticated(c) {
 		store := providers.SessionProvider().Get(c)
-		log.Println(store.Get("userid").(int64))
 		return uint(store.Get("userid").(int64))
 	}
 	return 0

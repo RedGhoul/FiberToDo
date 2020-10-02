@@ -32,9 +32,10 @@ func setupHiddenRoutes(app *fiber.App) {
 
 func setupTodoListRoutes(app *fiber.App) {
 	app.Get("/TodoLists", controllers.ShowListOfTodoLists)
-	app.Get("/CreateNewToDoList", controllers.GetTodoListForm)
+	app.Get("/CreateNewToDoList", controllers.ViewCreateTodoListForm)
 	app.Post("/CreateNewToDoList", controllers.CreateNewToDoList)
-	app.Get("/TodoList/:Id", controllers.ShowTodoList)
-	app.Put("/UpdateTodoList/:Id", controllers.UpdateToDoList)
+	app.Get("/TodoList/:Id", controllers.ViewToDoList)
+	app.Get("/UpdateTodoList/:Id", controllers.ViewUpdateToDoListForm)
+	app.Post("/UpdateTodoList/:Id", controllers.UpdateToDoList)
 	app.Delete("/DeleteTodoList/:Id", controllers.DeleteTodoList)
 }

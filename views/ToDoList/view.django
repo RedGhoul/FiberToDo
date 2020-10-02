@@ -1,0 +1,101 @@
+<style>
+    .completed {
+        text-decoration: line-through;
+        color: gray;
+    }
+
+    .list.list-group-item {
+        cursor: pointer;
+    }
+</style>
+<div class="row" style="padding-top:40px;">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="row">
+            <div class="col-9">
+                <h1>{{todolist.Title}} List</h1>
+            </div>
+            <div class="col-3">
+                <div class="btn btn-primary removeall">
+                    Clear
+                </div>
+                <div class="btn btn-primary add">
+                    +
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="[Add New Todo]">
+        </div>
+
+
+        <ul class="unordered list-group">
+            <li class="list list-group-item"><span><i class="fa fa-trash"></i></span>
+                <number></number>Go to potions Class
+            </li>
+            <li class="list list-group-item"> <span><i class="fa fa-trash"></i></span>
+                <number></number> Buy new Robes
+            </li>
+            <li class="list list-group-item"> <span><i class="fa fa-trash"></i></span>
+                <number></number> Visit Hagrid
+            </li>
+        </ul>
+
+
+    </div>
+    <div class="col-2"></div>
+</div>
+<script>
+    function updateNumbers() {
+        //update variable
+        var lists = document.querySelectorAll("number");
+        //update number
+        for (var i = 0; i < lists.length; i++) {
+            $(lists[i]).html(i + 1 + ") ");
+        }
+    }
+    updateNumbers();
+    //Check off Specific Todos By Clicking
+    $(".unordered").on("click", "li", function () {
+        $(this).toggleClass("completed");
+    });
+
+    //Click on X to delete Todo
+    $(".unordered").on('click', "span", function (e) {
+        e.stopPropagation();
+        $(this).closest("li").fadeOut(500, function () {
+            $(this).remove();
+            updateNumbers();
+        });
+    });
+
+    //Clear All
+    $(".removeall").on('click', function (e) {
+        $(".list.list-group-item").fadeOut("slow", function () {
+            $(this).remove();
+        });
+    });
+
+    //Add new todos
+    $("input[type='text']").keypress(function (e) {
+        if (e.which === 13) {
+            //grab text
+            var todoText = $(this).val();
+            //append todotext to ul
+            if ($(this).val() !== "") {
+                $(".unordered").append("<li class=\"list list-group-item\"><span><i class='fa fa-trash'> </i></span>" + "<number></number>" + todoText + "</li>");
+            }
+            updateNumbers();
+            //clear text
+            $(this).val("");
+        }
+    });
+
+    $(".add").click(function () {
+        $("input[type='text']").fadeToggle("fast", "linear", function () {
+
+        });
+    });
+</script>

@@ -10,8 +10,9 @@
   <tbody>
   {% for todolist in todolists %} 
     <tr>
+
       <td>{{todolist.Title}}</td>
-      <td>View</td>
+      <td><a href="/TodoList/{{todolist.Model.ID}}">View</a></td>
     </tr>
   {% endfor %}
    
