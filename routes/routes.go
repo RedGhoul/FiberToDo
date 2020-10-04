@@ -28,6 +28,7 @@ func setupBasicRoutes(app *fiber.App) {
 func setupHiddenRoutes(app *fiber.App) {
 	app.Get("/Secrect", controllers.ShowSecrect)
 	setupTodoListRoutes(app)
+	setupTodoListItemRoutes(app)
 }
 
 func setupTodoListRoutes(app *fiber.App) {
@@ -38,4 +39,10 @@ func setupTodoListRoutes(app *fiber.App) {
 	app.Get("/UpdateTodoList/:Id", controllers.ViewUpdateToDoListForm)
 	app.Post("/UpdateTodoList/:Id", controllers.UpdateToDoList)
 	app.Delete("/DeleteTodoList/:Id", controllers.DeleteTodoList)
+}
+
+func setupTodoListItemRoutes(app *fiber.App) {
+	app.Post("/TodoListItem/:Id", controllers.CreateNewToDoListItem)
+	app.Delete("/TodoListItem/:Id", controllers.DeleteNewToDoListItem)
+	app.Put("/TodoListItem/:Id", controllers.UpdateNewToDoListItem)
 }

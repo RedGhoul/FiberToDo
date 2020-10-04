@@ -14,6 +14,7 @@
         <div class="row">
             <div class="col-9">
                 <h1>{{todolist.Title}} List</h1>
+
             </div>
             <div class="col-3">
                 <div class="btn btn-primary removeall">
@@ -27,20 +28,18 @@
 
 
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="[Add New Todo]">
+            <input id="inputbox" class="form-control" type="text" placeholder="[Add New Todo]">
+            <input hidden value="{{todolist.ID}}" id="ListId"></input>
         </div>
 
 
         <ul class="unordered list-group">
-            <li class="list list-group-item"><span><i class="fa fa-trash"></i></span>
-                <number></number>Go to potions Class
-            </li>
-            <li class="list list-group-item"> <span><i class="fa fa-trash"></i></span>
-                <number></number> Buy new Robes
-            </li>
-            <li class="list list-group-item"> <span><i class="fa fa-trash"></i></span>
-                <number></number> Visit Hagrid
-            </li>
+            {% for item in todolist.ToDoListItems %} 
+                <li class="list list-group-item"><span><i class="fa fa-trash"></i></span>
+                    <number>{{item.ID}}</number>{{item.Title}}
+                </li>
+            {% endfor %}
+           
         </ul>
 
 
@@ -83,13 +82,34 @@
         if (e.which === 13) {
             //grab text
             var todoText = $(this).val();
-            //append todotext to ul
-            if ($(this).val() !== "") {
-                $(".unordered").append("<li class=\"list list-group-item\"><span><i class='fa fa-trash'> </i></span>" + "<number></number>" + todoText + "</li>");
+            var todoListId = $("#ListId").val();
+            if(todoText.length > 0){
+            
+            $.ajax({
+                url : "/TodoListItem/"+todoListId,
+                type: "POST",
+                data : {
+                    listId:todoListId,
+                    title:todoText
+                },
+                success: function(data, textStatus, jqXHR)
+                {
+                    //append todotext to ul
+                    
+                    $(".unordered").append("<li class=\"list list-group-item\"><span><i class='fa fa-trash'> </i></span>" + "<number></number>" + todoText + "</li>");
+                   
+                    updateNumbers();
+                    //clear text
+                    $("#inputbox").val("");
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    console.log("bad");
+                }
+            });
             }
-            updateNumbers();
-            //clear text
-            $(this).val("");
+           
+           
         }
     });
 

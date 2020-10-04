@@ -26,13 +26,19 @@ func GetTodolistByIDAndUserId(todoId uint, userId uint) models.TodoList {
 	db := database.DBConn
 	var todolist models.TodoList
 	db.Where("id = ? AND user_refer = ?", todoId, userId).Find(&todolist)
+	var items []models.TodoListItem
+	db.Model(&todolist).Association("ToDoListItems").Find(&items)
+	todolist.ToDoListItems = items
 	return todolist
 }
 
 func GetTodolistByID(todoId uint) models.TodoList {
 	db := database.DBConn
 	var todolist models.TodoList
+	var items []models.TodoListItem
 	db.Find(&todolist, todoId)
+	db.Model(&todolist).Association("ToDoListItems").Find(&items)
+	todolist.ToDoListItems = items
 	return todolist
 }
 

@@ -8,9 +8,17 @@
             "name": "Launch",
             "type": "go",
             "request": "launch",
-            "mode": "auto",
-            "program": "${fileDirname}",
-            "env": {},
+            "mode": "debug",
+            "program": "${workspaceRoot}",
+            "env": {
+                "DEBUG": true,
+                "DBUSER": "gorm",
+                "DBPASSWORD": "gorm",
+                "DBNAME": "todolists",
+                "DBPORT": 5432,
+                "DBSSLMODE": "disable",
+                "SERVERPORT": 3000
+            },
             "args": []
         }
     ]
