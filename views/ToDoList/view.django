@@ -12,14 +12,11 @@
     <div class="col-2"></div>
     <div class="col-8">
         <div class="row">
-            <div class="col-9">
+            <div class="col-11">
                 <h1>{{todolist.Title}} List</h1>
 
             </div>
-            <div class="col-3">
-                <div class="btn btn-primary removeall">
-                    Clear
-                </div>
+            <div class="col-1">
                 <div class="btn btn-primary add">
                     +
                 </div>
@@ -32,12 +29,33 @@
             <input hidden value="{{todolist.ID}}" id="ListId"></input>
         </div>
 
-
         <ul class="unordered list-group">
             {% for item in todolist.ToDoListItems %} 
-                <li class="list list-group-item"><span><i class="fa fa-trash"></i></span>
-                    <number>{{item.ID}}</number>{{item.Title}}
-                </li>
+                {% if item.Done %}
+                  <li data-item-id="{{item.ID}}" class="list list-group-item completed">
+                    <div class="row">
+                        <div class="col-11">
+                            {{item.Title}}
+                        </div>
+                        <div class="col-1">
+                            <span><i class="fa fa-trash"></i></span>
+                        </div>
+                    </div>
+                  </li>
+                {% else %}
+                  <li data-item-id="{{item.ID}}" class="list list-group-item">
+                  <div class="row">
+                    <div class="col-11">
+                        {{item.Title}}
+                    </div>
+                    <div class="col-1">
+                        <span><i class="fa fa-trash"></i></span>
+                    </div>
+                  </div>
+
+                  </li>
+                {% endif %}
+              
             {% endfor %}
            
         </ul>
@@ -47,26 +65,51 @@
     <div class="col-2"></div>
 </div>
 <script>
-    function updateNumbers() {
-        //update variable
-        var lists = document.querySelectorAll("number");
-        //update number
-        for (var i = 0; i < lists.length; i++) {
-            $(lists[i]).html(i + 1 + ") ");
-        }
-    }
-    updateNumbers();
+
     //Check off Specific Todos By Clicking
     $(".unordered").on("click", "li", function () {
         $(this).toggleClass("completed");
+        var todolistItemId = $(this).data("item-id");
+        console.log(todolistItemId)
+                $.ajax({
+                    url : "/TodoListItem/MarkDone/"+todolistItemId,
+                    type: "GET",
+                    data : {
+                    },
+                    success: function(data, textStatus, jqXHR)
+                    {
+                      console.log("good")
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        console.log("bad");
+                    }
+                });
+            
     });
 
     //Click on X to delete Todo
     $(".unordered").on('click', "span", function (e) {
         e.stopPropagation();
         $(this).closest("li").fadeOut(500, function () {
-            $(this).remove();
-            updateNumbers();
+            var todolistItemId =$(this).closest("li").data("item-id");
+            console.log(todolistItemId)
+                $.ajax({
+                    url : "/TodoListItem/"+todolistItemId,
+                    type: "DELETE",
+                    data : {
+                    },
+                    success: function(data, textStatus, jqXHR)
+                    { 
+                        $(this).remove();
+                        console.log("good")
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        console.log("bad");
+                    }
+                });
+           
         });
     });
 
@@ -85,28 +128,27 @@
             var todoListId = $("#ListId").val();
             if(todoText.length > 0){
             
-            $.ajax({
-                url : "/TodoListItem/"+todoListId,
-                type: "POST",
-                data : {
-                    listId:todoListId,
-                    title:todoText
-                },
-                success: function(data, textStatus, jqXHR)
-                {
-                    //append todotext to ul
-                    
-                    $(".unordered").append("<li class=\"list list-group-item\"><span><i class='fa fa-trash'> </i></span>" + "<number></number>" + todoText + "</li>");
-                   
-                    updateNumbers();
-                    //clear text
-                    $("#inputbox").val("");
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    console.log("bad");
-                }
-            });
+                $.ajax({
+                    url : "/TodoListItem/"+todoListId,
+                    type: "POST",
+                    data : {
+                        listId:todoListId,
+                        title:todoText
+                    },
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        //append todotext to ul
+                        
+                        $(".unordered").append("<li class=\"list list-group-item\"><span><i class='fa fa-trash'> </i></span>" + "<number></number>" + todoText + "</li>");
+                
+                        //clear text
+                        $("#inputbox").val("");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        console.log("bad");
+                    }
+                });
             }
            
            

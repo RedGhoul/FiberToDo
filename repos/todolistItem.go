@@ -22,7 +22,7 @@ func Create_TodoListItem(title string, listId uint) {
 	db.Create(&newTodoListItem)
 }
 
-func MarkDone_TodoListItem(itemId uint) bool {
+func TodoListItem_ToggleDone(itemId uint) bool {
 	db := database.DBConn
 
 	var item models.TodoListItem
@@ -37,4 +37,12 @@ func MarkDone_TodoListItem(itemId uint) bool {
 	}
 	db.Save(&item)
 	return true
+}
+
+func TodoListItem_Delete(itemId uint) {
+	db := database.DBConn
+
+	var item models.TodoListItem
+	db.First(&item, itemId)
+	db.Delete(&item, itemId)
 }

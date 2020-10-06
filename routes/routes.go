@@ -42,7 +42,8 @@ func setupTodoListRoutes(app *fiber.App) {
 }
 
 func setupTodoListItemRoutes(app *fiber.App) {
-	app.Post("/TodoListItem/:Id", controllers.CreateNewToDoListItem)
-	app.Delete("/TodoListItem/:Id", controllers.DeleteNewToDoListItem)
-	app.Put("/TodoListItem/:Id", controllers.UpdateNewToDoListItem)
+	app.Post("/TodoListItem/:Id", controllers.ToDoListItem_Create)
+	app.Delete("/TodoListItem/:Id", controllers.ToDoListItem_Delete)
+	app.Put("/TodoListItem/:Id", controllers.ToDoListItem_Update)
+	app.Get("/TodoListItem/MarkDone/:Id", controllers.ToDoListItem_MarkDone)
 }
