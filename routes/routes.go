@@ -2,48 +2,48 @@ package routes
 
 import (
 	"github.com/RedGhoul/fibertodo/controllers"
+	"github.com/RedGhoul/fibertodo/literals"
 	"github.com/RedGhoul/fibertodo/utils"
 	"github.com/gofiber/fiber"
 )
 
 func SetupRoutes(app *fiber.App) {
-	setupAuthRoutes(app)
-	setupBasicRoutes(app)
+	setup_Auth(app)
+	setup_Basic(app)
+	setup_Hidden(app)
+}
+
+func setup_Auth(app *fiber.App) {
+	app.Get(literals.SysRoutes.Login, controllers.Show_Login_Form)
+	app.Post(literals.SysRoutes.Login, controllers.Post_Login_Form)
+	app.Get(literals.SysRoutes.Logout, controllers.Logout)
+	app.Get(literals.SysRoutes.Register, controllers.Show_Register_Form)
+	app.Post(literals.SysRoutes.Register, controllers.Post_Register_Form)
+}
+
+func setup_Basic(app *fiber.App) {
+	app.Get(literals.SysRoutes.Home, controllers.Show_Index)
+}
+
+func setup_Hidden(app *fiber.App) {
 	app.Use(utils.CheckAuth())
-	setupHiddenRoutes(app)
+	setup_TodoList(app)
+	setup_TodoListItem(app)
 }
 
-func setupAuthRoutes(app *fiber.App) {
-	app.Get("/Login", controllers.ShowLoginForm)
-	app.Post("/Login", controllers.PostLoginForm)
-	app.Get("/Logout", controllers.Logout)
-	app.Get("/Register", controllers.ShowRegisterForm)
-	app.Post("/Register", controllers.PostRegisterForm)
+func setup_TodoList(app *fiber.App) {
+	app.Get(literals.SysRoutes.Todolists, controllers.Show_List_Of_TodoLists)
+	app.Get(literals.SysRoutes.Createtodolists, controllers.Show_Create_TodoList_Form)
+	app.Post(literals.SysRoutes.Createtodolists, controllers.Create_ToDoList)
+	app.Get(literals.SysRoutes.Todolistid, controllers.Show_ToDoList)
+	app.Get(literals.SysRoutes.Updatetodolist, controllers.Show_Update_ToDoList_Form)
+	app.Post(literals.SysRoutes.Updatetodolist, controllers.Update_ToDoList)
+	app.Delete(literals.SysRoutes.Deletetodolist, controllers.Delete_TodoList)
 }
 
-func setupBasicRoutes(app *fiber.App) {
-	app.Get("/", controllers.ShowIndex)
-}
-
-func setupHiddenRoutes(app *fiber.App) {
-	app.Get("/Secrect", controllers.ShowSecrect)
-	setupTodoListRoutes(app)
-	setupTodoListItemRoutes(app)
-}
-
-func setupTodoListRoutes(app *fiber.App) {
-	app.Get("/TodoLists", controllers.ShowListOfTodoLists)
-	app.Get("/CreateNewToDoList", controllers.ViewCreateTodoListForm)
-	app.Post("/CreateNewToDoList", controllers.CreateNewToDoList)
-	app.Get("/TodoList/:Id", controllers.ViewToDoList)
-	app.Get("/UpdateTodoList/:Id", controllers.ViewUpdateToDoListForm)
-	app.Post("/UpdateTodoList/:Id", controllers.UpdateToDoList)
-	app.Delete("/DeleteTodoList/:Id", controllers.DeleteTodoList)
-}
-
-func setupTodoListItemRoutes(app *fiber.App) {
-	app.Post("/TodoListItem/:Id", controllers.ToDoListItem_Create)
-	app.Delete("/TodoListItem/:Id", controllers.ToDoListItem_Delete)
-	app.Put("/TodoListItem/:Id", controllers.ToDoListItem_Update)
-	app.Get("/TodoListItem/MarkDone/:Id", controllers.ToDoListItem_MarkDone)
+func setup_TodoListItem(app *fiber.App) {
+	app.Post(literals.SysRoutes.Todolistitem, controllers.Create_ToDoList_Item)
+	app.Delete(literals.SysRoutes.Todolistitem, controllers.Delete_ToDoList_Item)
+	app.Put(literals.SysRoutes.Todolistitem, controllers.Update_ToDoList_Item)
+	app.Get(literals.SysRoutes.Todolistitemdone, controllers.Mark_Done_ToDoList_Item)
 }

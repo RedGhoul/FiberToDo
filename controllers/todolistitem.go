@@ -15,7 +15,7 @@ import (
 /*
 	Create a todo list item
 */
-func ToDoListItem_Create(c *fiber.Ctx) {
+func Create_ToDoList_Item(c *fiber.Ctx) {
 	if userID := utils.GetUserId(c); userID != 0 {
 		// Instantiate new Product struct
 		p := new(models.TodoListItemDto)
@@ -29,9 +29,10 @@ func ToDoListItem_Create(c *fiber.Ctx) {
 			})
 			return
 		}
-		repos.Create_TodoListItem(p.Title, p.ListId)
+		created_id := repos.Create_TodoListItem(p.Title, p.ListId)
 		c.Status(200).JSON(&fiber.Map{
 			"success": true,
+			"id":      created_id,
 		})
 		return
 	} else {
@@ -42,7 +43,7 @@ func ToDoListItem_Create(c *fiber.Ctx) {
 /*
 	Delete a todo list item
 */
-func ToDoListItem_Delete(c *fiber.Ctx) {
+func Delete_ToDoList_Item(c *fiber.Ctx) {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		repos.TodoListItem_Delete(uint(value))
@@ -58,14 +59,14 @@ func ToDoListItem_Delete(c *fiber.Ctx) {
 /*
 	Update a todo list item
 */
-func ToDoListItem_Update(c *fiber.Ctx) {
+func Update_ToDoList_Item(c *fiber.Ctx) {
 	c.Send("UpdateNewToDoListItem")
 }
 
 /*
 	Update a todo list item
 */
-func ToDoListItem_MarkDone(c *fiber.Ctx) {
+func Mark_Done_ToDoList_Item(c *fiber.Ctx) {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		repos.TodoListItem_ToggleDone(uint(value))

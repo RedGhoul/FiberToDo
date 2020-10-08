@@ -6,11 +6,11 @@ import (
 	"github.com/gofiber/fiber"
 )
 
-func ShowRegisterForm(c *fiber.Ctx) {
+func Show_Register_Form(c *fiber.Ctx) {
 	utils.Render(c, "Auth/register", "layouts/main", fiber.Map{})
 }
 
-func PostRegisterForm(c *fiber.Ctx) {
+func Post_Register_Form(c *fiber.Ctx) {
 	username := c.FormValue("username")
 	password1 := c.FormValue("password")
 	password2 := c.FormValue("password2")
@@ -23,14 +23,14 @@ func PostRegisterForm(c *fiber.Ctx) {
 			c.Redirect("/Login")
 		}
 	}
-	c.Send("Could not register")
+	return
 }
 
-func ShowLoginForm(c *fiber.Ctx) {
+func Show_Login_Form(c *fiber.Ctx) {
 	utils.Render(c, "Auth/login", "layouts/main", fiber.Map{})
 }
 
-func PostLoginForm(c *fiber.Ctx) {
+func Post_Login_Form(c *fiber.Ctx) {
 	username := c.FormValue("username")
 	password := c.FormValue("password")
 	didmatch, curuser := utils.MatchPasswords(username, password)

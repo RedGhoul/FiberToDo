@@ -12,14 +12,9 @@
     <div class="col-2"></div>
     <div class="col-8">
         <div class="row">
-            <div class="col-11">
+            <div class="col-12">
                 <h1>{{todolist.Title}} List</h1>
 
-            </div>
-            <div class="col-1">
-                <div class="btn btn-primary add">
-                    +
-                </div>
             </div>
         </div>
 
@@ -66,68 +61,53 @@
 </div>
 <script>
 
-    //Check off Specific Todos By Clicking
-    $(".unordered").on("click", "li", function () {
+    var markAsCompleted = $(".unordered").on("click", "li", function () {
         $(this).toggleClass("completed");
         var todolistItemId = $(this).data("item-id");
-        console.log(todolistItemId)
-                $.ajax({
-                    url : "/TodoListItem/MarkDone/"+todolistItemId,
-                    type: "GET",
-                    data : {
-                    },
-                    success: function(data, textStatus, jqXHR)
-                    {
-                      console.log("good")
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        console.log("bad");
-                    }
-                });
-            
+        $.ajax({
+            url : "/TodoListItem/MarkDone/"+todolistItemId,
+            type: "GET",
+            data : {
+            },
+            success: function(data, textStatus, jqXHR)
+            {
+                console.log("good")
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                console.log("bad");
+            }
+        });
     });
 
-    //Click on X to delete Todo
-    $(".unordered").on('click', "span", function (e) {
+    var deleteItemInList = $(".unordered").on('click', "span", function (e) {
         e.stopPropagation();
         $(this).closest("li").fadeOut(500, function () {
             var todolistItemId =$(this).closest("li").data("item-id");
-            console.log(todolistItemId)
-                $.ajax({
-                    url : "/TodoListItem/"+todolistItemId,
-                    type: "DELETE",
-                    data : {
-                    },
-                    success: function(data, textStatus, jqXHR)
-                    { 
-                        $(this).remove();
-                        console.log("good")
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        console.log("bad");
-                    }
-                });
+            
+            $.ajax({
+                url : "/TodoListItem/"+todolistItemId,
+                type: "DELETE",
+                data : {
+                },
+                success: function(data, textStatus, jqXHR)
+                { 
+                    $(this).remove();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    console.log("bad");
+                }
+            });
            
         });
     });
 
-    //Clear All
-    $(".removeall").on('click', function (e) {
-        $(".list.list-group-item").fadeOut("slow", function () {
-            $(this).remove();
-        });
-    });
-
-    //Add new todos
     $("input[type='text']").keypress(function (e) {
         if (e.which === 13) {
-            //grab text
             var todoText = $(this).val();
             var todoListId = $("#ListId").val();
             if(todoText.length > 0){
-            
                 $.ajax({
                     url : "/TodoListItem/"+todoListId,
                     type: "POST",
@@ -137,27 +117,29 @@
                     },
                     success: function(data, textStatus, jqXHR)
                     {
-                        //append todotext to ul
-                        
-                        $(".unordered").append("<li class=\"list list-group-item\"><span><i class='fa fa-trash'> </i></span>" + "<number></number>" + todoText + "</li>");
+                        $(".unordered").append(`
+                             <li data-item-id="${data.id}" class="list list-group-item">
+                                <div class="row">
+                                    <div class="col-11">
+                                        ${todoText}
+                                    </div>
+                                    <div class="col-1">
+                                        <span><i class="fa fa-trash"></i></span>
+                                    </div>
+                                </div>
+                            </li>
+                        `);
                 
                         //clear text
                         $("#inputbox").val("");
                     },
                     error: function (jqXHR, textStatus, errorThrown)
                     {
-                        console.log("bad");
                     }
                 });
             }
            
            
         }
-    });
-
-    $(".add").click(function () {
-        $("input[type='text']").fadeToggle("fast", "linear", function () {
-
-        });
     });
 </script>

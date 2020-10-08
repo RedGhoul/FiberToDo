@@ -6,13 +6,8 @@ import (
 	"github.com/gofiber/fiber"
 )
 
-func ShowIndex(c *fiber.Ctx) {
+func Show_Index(c *fiber.Ctx) {
 	users := repos.GetAllUsers()
 	utils.Render(c, "Home/index", "layouts/main", fiber.Map{"users": users,
 		"Title": "Hello, World!"})
-}
-
-func ShowSecrect(c *fiber.Ctx) {
-	utils.Render(c, "Home/secrect", "layouts/main", fiber.Map{"msg": "I like dogs"})
-
 }

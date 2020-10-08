@@ -14,7 +14,7 @@ var HomePage = "/TodoLists"
 /*
 	Show a list of todo lists you have
 */
-func ShowListOfTodoLists(c *fiber.Ctx) {
+func Show_List_Of_TodoLists(c *fiber.Ctx) {
 
 	if userID := utils.GetUserId(c); userID != 0 {
 		todolists := repos.GetAllTodoListsByUserId(userID)
@@ -26,9 +26,9 @@ func ShowListOfTodoLists(c *fiber.Ctx) {
 }
 
 /*
-	View a todo list
+	Show a todo list
 */
-func ViewToDoList(c *fiber.Ctx) {
+func Show_ToDoList(c *fiber.Ctx) {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		todolist := repos.GetTodolistByIDAndUserId(uint(value), userID)
@@ -39,9 +39,9 @@ func ViewToDoList(c *fiber.Ctx) {
 }
 
 /*
-	View update form for todo list
+	Show update form for todo list
 */
-func ViewUpdateToDoListForm(c *fiber.Ctx) {
+func Show_Update_ToDoList_Form(c *fiber.Ctx) {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		todolist := repos.GetTodolistByID(uint(value))
@@ -56,7 +56,7 @@ func ViewUpdateToDoListForm(c *fiber.Ctx) {
 /*
 	Update a todo list
 */
-func UpdateToDoList(c *fiber.Ctx) {
+func Update_ToDoList(c *fiber.Ctx) {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		todolist := repos.GetTodolistByID(uint(value))
@@ -71,7 +71,7 @@ func UpdateToDoList(c *fiber.Ctx) {
 /*
 	Delete a todo list
 */
-func DeleteTodoList(c *fiber.Ctx) {
+func Delete_TodoList(c *fiber.Ctx) {
 	//todoListId := c.Params("Id")
 	c.JSON("OK")
 }
@@ -79,7 +79,7 @@ func DeleteTodoList(c *fiber.Ctx) {
 /*
 	Create a todo list
 */
-func CreateNewToDoList(c *fiber.Ctx) {
+func Create_ToDoList(c *fiber.Ctx) {
 	todolistname := c.FormValue("todolistname")
 	if len(todolistname) == 0 {
 		c.Redirect("/CreateNewToDoList")
@@ -93,8 +93,8 @@ func CreateNewToDoList(c *fiber.Ctx) {
 }
 
 /*
-	Get a todo list form
+	Show create todolist form
 */
-func ViewCreateTodoListForm(c *fiber.Ctx) {
+func Show_Create_TodoList_Form(c *fiber.Ctx) {
 	utils.Render(c, "ToDoList/create", "layouts/main", fiber.Map{})
 }

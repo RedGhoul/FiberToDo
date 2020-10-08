@@ -12,7 +12,11 @@
     <tr>
 
       <td>{{todolist.Title}}</td>
-      <td><a href="/TodoList/{{todolist.Model.ID}}">View</a></td>
+      <td>
+        <a href="{{sys.Todolist}}/{{todolist.Model.ID}}">View</a>
+        <a href="{{sys.Todolist}}/{{todolist.Model.ID}}">Update</a>
+        <a href="{{sys.Todolist}}/{{todolist.Model.ID}}">Delete</a>
+      </td>
     </tr>
   {% endfor %}
    

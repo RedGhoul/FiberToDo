@@ -8,27 +8,21 @@
       <ul class="navbar-nav mr-auto">
         {% if signedIn %}
           <li class="nav-item">
-            <a class="nav-link" href="/TodoList/1">TodoLists1</a>
+            <a class="nav-link" href="{{sys.Home}}">TodoLists</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/TodoLists">TodoLists</a>
+            <a class="nav-link" href="{{sys.Createtodolists}}">Create New TodoList</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/CreateNewToDoList">Create New TodoList</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Secrect">Secrect</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Logout">Logout</a>
+            <a class="nav-link" href="{{sys.Logout}}">Logout</a>
           </li>
         {% else %}
         
          <li class="nav-item">
-          <a class="nav-link" href="/Login">Login</a>
+          <a class="nav-link" href="{{sys.Login}}">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/Register">Register</a>
+          <a class="nav-link" href="{{sys.Register}}">Register</a>
         </li>
          {% endif %}
       </ul>

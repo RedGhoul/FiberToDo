@@ -14,12 +14,13 @@ func GetAll_TodoListItems_ByListId(listId int) []models.TodoListItem {
 	return items
 }
 
-func Create_TodoListItem(title string, listId uint) {
+func Create_TodoListItem(title string, listId uint) uint {
 	db := database.DBConn
 	var newTodoListItem models.TodoListItem
 	newTodoListItem.Title = title
 	newTodoListItem.TodoListRefer = listId
 	db.Create(&newTodoListItem)
+	return newTodoListItem.ID
 }
 
 func TodoListItem_ToggleDone(itemId uint) bool {

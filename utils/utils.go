@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"fmt"
 	"log"
 
+	"github.com/RedGhoul/fibertodo/literals"
 	"github.com/RedGhoul/fibertodo/models"
 	"github.com/RedGhoul/fibertodo/providers"
 	"github.com/RedGhoul/fibertodo/repos"
@@ -60,7 +60,7 @@ func CheckAuth() fiber.Handler {
 
 func Render(c *fiber.Ctx, pageName string, layoutName string, data fiber.Map) {
 	data["signedIn"] = providers.IsAuthenticated(c)
-	fmt.Println(data)
+	data["sys"] = literals.SysRoutes
 	if err := c.Render(pageName, data, layoutName); err != nil {
 		c.Status(500).Send(err.Error())
 	}
