@@ -45,5 +45,5 @@ func setupViewEngine() *fiber.App {
 }
 
 func setupAppListenPort(app *fiber.App) {
-	app.Listen("localhost:" + os.Getenv("SERVERPORT"))
+	app.Listen(os.Getenv("BASEPORT") + ":" + os.Getenv("SERVERPORT"))
 }
