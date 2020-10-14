@@ -29,8 +29,11 @@
                 {% if item.Done %}
                   <li data-item-id="{{item.ID}}" class="list list-group-item completed">
                     <div class="row">
-                        <div class="col-11">
+                        <div class="col-9">
                             {{item.Title}}
+                        </div>
+                        <div class="col-2">
+                            {{item.Model.CreatedAt.Format("2006-01-02")}}
                         </div>
                         <div class="col-1">
                             <span><i class="fa fa-trash"></i></span>
@@ -40,8 +43,11 @@
                 {% else %}
                   <li data-item-id="{{item.ID}}" class="list list-group-item">
                   <div class="row">
-                    <div class="col-11">
+                    <div class="col-9">
                         {{item.Title}}
+                    </div>
+                    <div class="col-2">
+                        {{item.CreatedAt.Format("2006-01-02")}}
                     </div>
                     <div class="col-1">
                         <span><i class="fa fa-trash"></i></span>
@@ -65,7 +71,7 @@
         $(this).toggleClass("completed");
         var todolistItemId = $(this).data("item-id");
         $.ajax({
-            url : "/TodoListItem/MarkDone/"+todolistItemId,
+            url : "{{sys.TodolistitemDone}}/"+todolistItemId,
             type: "GET",
             data : {
             },
@@ -86,7 +92,7 @@
             var todolistItemId =$(this).closest("li").data("item-id");
             
             $.ajax({
-                url : "/TodoListItem/"+todolistItemId,
+                url : "{{sys.Todolistitem}}/"+todolistItemId,
                 type: "DELETE",
                 data : {
                 },
@@ -109,7 +115,7 @@
             var todoListId = $("#ListId").val();
             if(todoText.length > 0){
                 $.ajax({
-                    url : "/TodoListItem/"+todoListId,
+                    url : "{{sys.Todolistitem}}/"+todoListId,
                     type: "POST",
                     data : {
                         listId:todoListId,
@@ -120,8 +126,11 @@
                         $(".unordered").append(`
                              <li data-item-id="${data.id}" class="list list-group-item">
                                 <div class="row">
-                                    <div class="col-11">
+                                    <div class="col-9">
                                         ${todoText}
+                                    </div>
+                                    <div class="col-2">
+                                       ${data.create_at}
                                     </div>
                                     <div class="col-1">
                                         <span><i class="fa fa-trash"></i></span>

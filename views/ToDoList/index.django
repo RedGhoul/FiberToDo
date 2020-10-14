@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th scope="col">Title</th>
+      <th scope="col">Created</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -12,10 +13,11 @@
     <tr>
 
       <td>{{todolist.Title}}</td>
+      <td>{{todolist.CreatedAt.Format("2006-01-02")}}</td>
       <td>
         <a href="{{sys.Todolist}}/{{todolist.Model.ID}}">View</a>
-        <a href="{{sys.Todolist}}/{{todolist.Model.ID}}">Update</a>
-        <a href="{{sys.Todolist}}/{{todolist.Model.ID}}">Delete</a>
+        <a href="{{sys.Updatetodolist}}/{{todolist.Model.ID}}">Update</a>
+        <a href="{{sys.Deletetodolist}}/{{todolist.Model.ID}}">Delete</a>
       </td>
     </tr>
   {% endfor %}

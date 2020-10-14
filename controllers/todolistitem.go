@@ -29,10 +29,13 @@ func Create_ToDoList_Item(c *fiber.Ctx) {
 			})
 			return
 		}
-		created_id := repos.Create_TodoListItem(p.Title, p.ListId)
+		createdItem := repos.Create_TodoListItem(p.Title, p.ListId)
+		things := createdItem.CreatedAt.Format("2006-01-02")
+
 		c.Status(200).JSON(&fiber.Map{
-			"success": true,
-			"id":      created_id,
+			"success":   true,
+			"id":        createdItem.ID,
+			"create_at": things,
 		})
 		return
 	} else {

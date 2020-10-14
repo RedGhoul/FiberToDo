@@ -29,6 +29,7 @@ func GetTodolistByIDAndUserId(todoId uint, userId uint) models.TodoList {
 	var items []models.TodoListItem
 	db.Model(&todolist).Association("ToDoListItems").Find(&items)
 	todolist.ToDoListItems = items
+
 	return todolist
 }
 
@@ -39,6 +40,15 @@ func GetTodolistByID(todoId uint) models.TodoList {
 	db.Find(&todolist, todoId)
 	db.Model(&todolist).Association("ToDoListItems").Find(&items)
 	todolist.ToDoListItems = items
+	return todolist
+}
+
+func UpdateTodolistByID(todoId uint, title string) models.TodoList {
+	db := database.DBConn
+	var todolist models.TodoList
+	db.Find(&todolist, todoId)
+	todolist.Title = title
+	db.Model(&todolist).Update("title", title)
 	return todolist
 }
 

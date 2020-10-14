@@ -1,8 +1,8 @@
 <script type="text/javascript" src="/asset/site.js"></script>
-<form action="{{sys.Createtodolist}}" method="post">
+<form action="{{sys.Updatetodolist}}/{{todolist.ID}}" method="post">
   <div class="form-group">
     <label for="todolistname">To Do List Name:</label>
-    <input type="text" class="form-control" id="todolistname" name="todolistname" placeholder="Enter Name Here">
+    <input type="text" class="form-control" id="todolistname" name="todolistname" value="{{todolist.Title}}">
   </div>
   <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
 </form>

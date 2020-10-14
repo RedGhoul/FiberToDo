@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"strconv"
 
 	"github.com/RedGhoul/fibertodo/repos"
@@ -32,6 +31,10 @@ func Show_ToDoList(c *fiber.Ctx) {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		todolist := repos.GetTodolistByIDAndUserId(uint(value), userID)
+		// for _, val := range todolist.ToDoListItems {
+		// 	val.CreatedAt = val.CreatedAt.Format("2006-01-02")
+		// }
+
 		utils.Render(c, "ToDoList/view", "layouts/main", fiber.Map{"todolist": todolist})
 	} else {
 		c.Redirect(HomePage)
@@ -45,8 +48,8 @@ func Show_Update_ToDoList_Form(c *fiber.Ctx) {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		todolist := repos.GetTodolistByID(uint(value))
-		log.Println(todolist)
-		utils.Render(c, "ToDoList/index", "layouts/main", fiber.Map{"todolist": todolist})
+		utils.Render(c, "ToDoList/update", "layouts/main", fiber.Map{"todolist": todolist})
+		return
 	} else {
 		c.Redirect(HomePage)
 	}
@@ -59,21 +62,29 @@ func Show_Update_ToDoList_Form(c *fiber.Ctx) {
 func Update_ToDoList(c *fiber.Ctx) {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
+		todolistname := c.FormValue("todolistname")
+		if len(todolistname) > 0 {
+			repos.UpdateTodolistByID(uint(value), todolistname)
+			c.Redirect(HomePage)
+			return
+		}
 		todolist := repos.GetTodolistByID(uint(value))
-		log.Println(todolist)
 		utils.Render(c, "ToDoList/index", "layouts/main", fiber.Map{"todolist": todolist})
-	} else {
-		c.Redirect(HomePage)
+		return
 	}
-	c.JSON("OK")
+	c.Redirect(HomePage)
 }
 
 /*
 	Delete a todo list
 */
 func Delete_TodoList(c *fiber.Ctx) {
-	//todoListId := c.Params("Id")
-	c.JSON("OK")
+	if userID := utils.GetUserId(c); userID != 0 {
+		value, _ := strconv.Atoi(c.Params("Id"))
+		repos.DeleteTodoList(uint(value), userID)
+
+	}
+	c.Redirect(HomePage)
 }
 
 /*

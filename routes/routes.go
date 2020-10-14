@@ -33,17 +33,17 @@ func setup_Hidden(app *fiber.App) {
 
 func setup_TodoList(app *fiber.App) {
 	app.Get(literals.SysRoutes.Todolists, controllers.Show_List_Of_TodoLists)
-	app.Get(literals.SysRoutes.Createtodolists, controllers.Show_Create_TodoList_Form)
-	app.Post(literals.SysRoutes.Createtodolists, controllers.Create_ToDoList)
-	app.Get(literals.SysRoutes.Todolistid, controllers.Show_ToDoList)
-	app.Get(literals.SysRoutes.Updatetodolist, controllers.Show_Update_ToDoList_Form)
-	app.Post(literals.SysRoutes.Updatetodolist, controllers.Update_ToDoList)
-	app.Delete(literals.SysRoutes.Deletetodolist, controllers.Delete_TodoList)
+	app.Get(literals.SysRoutes.Createtodolist, controllers.Show_Create_TodoList_Form)
+	app.Post(literals.SysRoutes.Createtodolist, controllers.Create_ToDoList)
+	app.Get(literals.SysRoutes.TodolistID, controllers.Show_ToDoList)
+	app.Get(literals.SysRoutes.UpdatetodolistID, controllers.Show_Update_ToDoList_Form)
+	app.Post(literals.SysRoutes.UpdatetodolistID, controllers.Update_ToDoList)
+	app.Get(literals.SysRoutes.DeletetodolistID, controllers.Delete_TodoList)
 }
 
 func setup_TodoListItem(app *fiber.App) {
-	app.Post(literals.SysRoutes.Todolistitem, controllers.Create_ToDoList_Item)
-	app.Delete(literals.SysRoutes.Todolistitem, controllers.Delete_ToDoList_Item)
-	app.Put(literals.SysRoutes.Todolistitem, controllers.Update_ToDoList_Item)
-	app.Get(literals.SysRoutes.Todolistitemdone, controllers.Mark_Done_ToDoList_Item)
+	app.Post(literals.SysRoutes.TodolistitemID, controllers.Create_ToDoList_Item)
+	app.Delete(literals.SysRoutes.TodolistitemID, controllers.Delete_ToDoList_Item)
+	app.Put(literals.SysRoutes.TodolistitemID, controllers.Update_ToDoList_Item)
+	app.Get(literals.SysRoutes.TodolistitemDoneID, controllers.Mark_Done_ToDoList_Item)
 }

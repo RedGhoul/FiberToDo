@@ -9,7 +9,6 @@ type TodoListItem struct {
 	Title         string `josn:"title"`
 	Done          bool   `json:"done"`
 	Author        string `json:"author"`
-	Rating        int    `json:"rating"`
 	TodoListRefer uint   `json:"TodoListRefer"`
 }
 

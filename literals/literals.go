@@ -1,33 +1,43 @@
 package literals
 
 type routesliterals struct {
-	Home             string
-	Login            string
-	Logout           string
-	Register         string
-	Todolists        string
-	Todolist         string
-	Createtodolists  string
-	Todolistid       string
-	Updatetodolist   string
-	Deletetodolist   string
-	Todolistitem     string
-	Todolistitemdone string
+	Home               string
+	Login              string
+	Logout             string
+	Register           string
+	Todolists          string
+	TodolistUpdate     string
+	TodolistDelete     string
+	Todolist           string
+	TodolistID         string
+	Createtodolist     string
+	Updatetodolist     string
+	UpdatetodolistID   string
+	Deletetodolist     string
+	DeletetodolistID   string
+	Todolistitem       string
+	TodolistitemID     string
+	TodolistitemDone   string
+	TodolistitemDoneID string
 }
 
 var (
 	SysRoutes routesliterals = routesliterals{
-		"/",
-		"/Login",
-		"/Logout",
-		"/Register",
-		"/TodoLists",
-		"/Todolist",
-		"/Create/ToDoList",
-		"/TodoList/:Id",
-		"/Update/TodoList/:Id",
-		"/Delete/TodoList/:Id",
-		"/TodoList/Item/:Id",
-		"/TodoList/Item/Done/:Id",
+		Home:               "/",
+		Login:              "/Login",
+		Logout:             "/Logout",
+		Register:           "/Register",
+		Todolists:          "/TodoLists",
+		Todolist:           "/Todolist",
+		TodolistID:         "/TodoList/:Id",
+		Createtodolist:     "/Create/TodoList",
+		Updatetodolist:     "/Update/TodoList",
+		UpdatetodolistID:   "/Update/TodoList/:Id",
+		Deletetodolist:     "/Delete/TodoList",
+		DeletetodolistID:   "/Delete/TodoList/:Id",
+		Todolistitem:       "/TodoList/Item",
+		TodolistitemID:     "/TodoList/Item/:Id",
+		TodolistitemDone:   "/TodoList/Item/Done",
+		TodolistitemDoneID: "/TodoList/Item/Done/:Id",
 	}
 )
