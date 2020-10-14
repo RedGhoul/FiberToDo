@@ -1,7 +1,9 @@
 package database
 
 import (
+	"fmt"
 	"log"
+	"net/url"
 	"os"
 	"strconv"
 	"time"
@@ -37,17 +39,19 @@ func InitDb() {
 	}
 
 	var err error
-	dsn := "user=" + os.Getenv("DBUSER") +
-		" password=" + os.Getenv("DBPASSWORD") +
-		" dbname=" + os.Getenv("DBNAME") +
-		" port=" + os.Getenv("DBPORT") +
-		" sslmode=" + os.Getenv("DBSSLMODE")
+	dsn := url.URL{
+		User:     url.UserPassword(os.Getenv("DBUSER"), os.Getenv("DBPASSWORD")),
+		Scheme:   "postgres",
+		Host:     fmt.Sprintf("%s:%s", os.Getenv("DBHOST"), os.Getenv("DBPORT")),
+		Path:     os.Getenv("DBNAME"),
+		RawQuery: (&url.Values{"sslmode": []string{"disable"}}).Encode(),
+	}
 	if DebugFlag {
-		DBConn, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+		DBConn, err = gorm.Open(postgres.Open(dsn.String()), &gorm.Config{
 			Logger: newLogger,
 		})
 	} else {
-		DBConn, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+		DBConn, err = gorm.Open(postgres.Open(dsn.String()), &gorm.Config{})
 	}
 
 	if err != nil {
