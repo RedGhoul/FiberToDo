@@ -3,8 +3,9 @@ package controllers
 import (
 	"strconv"
 
-	"github.com/RedGhoul/fibertodo/repos"
-	"github.com/RedGhoul/fibertodo/utils"
+	"fibertodo/repos"
+	"fibertodo/utils"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -17,11 +18,11 @@ func Show_List_Of_TodoLists(c *fiber.Ctx) error {
 
 	if userID := utils.GetUserId(c); userID != 0 {
 		todolists := repos.GetAllTodoListsByUserId(userID)
-		utils.Render(c, "ToDoList/index", "layouts/main", fiber.Map{"todolists": todolists})
+		return utils.Render(c, "ToDoList/index", "layouts/main", fiber.Map{"todolists": todolists})
 	} else {
 		c.Redirect(HomePage)
 	}
-
+	return nil
 }
 
 /*
@@ -31,14 +32,12 @@ func Show_ToDoList(c *fiber.Ctx) error {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		todolist := repos.GetTodolistByIDAndUserId(uint(value), userID)
-		// for _, val := range todolist.ToDoListItems {
-		// 	val.CreatedAt = val.CreatedAt.Format("2006-01-02")
-		// }
 
-		utils.Render(c, "ToDoList/view", "layouts/main", fiber.Map{"todolist": todolist})
+		return utils.Render(c, "ToDoList/view", "layouts/main", fiber.Map{"todolist": todolist})
 	} else {
 		c.Redirect(HomePage)
 	}
+	return nil
 }
 
 /*
@@ -48,12 +47,12 @@ func Show_Update_ToDoList_Form(c *fiber.Ctx) error {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		todolist := repos.GetTodolistByID(uint(value))
-		utils.Render(c, "ToDoList/update", "layouts/main", fiber.Map{"todolist": todolist})
-		return
+		return utils.Render(c, "ToDoList/update", "layouts/main", fiber.Map{"todolist": todolist})
+
 	} else {
 		c.Redirect(HomePage)
 	}
-	c.JSON("OK")
+	return c.JSON("OK")
 }
 
 /*
@@ -65,14 +64,13 @@ func Update_ToDoList(c *fiber.Ctx) error {
 		todolistname := c.FormValue("todolistname")
 		if len(todolistname) > 0 {
 			repos.UpdateTodolistByID(uint(value), todolistname)
-			c.Redirect(HomePage)
-			return
+			return c.Redirect(HomePage)
 		}
 		todolist := repos.GetTodolistByID(uint(value))
-		utils.Render(c, "ToDoList/index", "layouts/main", fiber.Map{"todolist": todolist})
-		return
+		return utils.Render(c, "ToDoList/index", "layouts/main", fiber.Map{"todolist": todolist})
+
 	}
-	c.Redirect(HomePage)
+	return c.Redirect(HomePage)
 }
 
 /*
@@ -84,7 +82,7 @@ func Delete_TodoList(c *fiber.Ctx) error {
 		repos.DeleteTodoList(uint(value), userID)
 
 	}
-	c.Redirect(HomePage)
+	return c.Redirect(HomePage)
 }
 
 /*
@@ -93,13 +91,13 @@ func Delete_TodoList(c *fiber.Ctx) error {
 func Create_ToDoList(c *fiber.Ctx) error {
 	todolistname := c.FormValue("todolistname")
 	if len(todolistname) == 0 {
-		c.Redirect("/CreateNewToDoList")
+		return c.Redirect("/CreateNewToDoList")
 	}
 	if userID := utils.GetUserId(c); userID != 0 {
 		repos.CreateTodoList(todolistname, userID)
-		c.Redirect(HomePage)
+		return c.Redirect(HomePage)
 	} else {
-		c.Redirect("/CreateNewToDoList")
+		return c.Redirect("/CreateNewToDoList")
 	}
 }
 
@@ -107,5 +105,5 @@ func Create_ToDoList(c *fiber.Ctx) error {
 	Show create todolist form
 */
 func Show_Create_TodoList_Form(c *fiber.Ctx) error {
-	utils.Render(c, "ToDoList/create", "layouts/main", fiber.Map{})
+	return utils.Render(c, "ToDoList/create", "layouts/main", fiber.Map{})
 }

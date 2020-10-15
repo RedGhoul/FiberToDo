@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/RedGhoul/fibertodo/database"
-	"github.com/RedGhoul/fibertodo/models"
-	"github.com/RedGhoul/fibertodo/providers"
+	"fibertodo/database"
+	"fibertodo/models"
+	"fibertodo/providers"
 )
 
 func GetAllUsers() []models.User {

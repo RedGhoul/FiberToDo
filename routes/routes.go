@@ -1,9 +1,10 @@
 package routes
 
 import (
-	"github.com/RedGhoul/fibertodo/controllers"
-	"github.com/RedGhoul/fibertodo/literals"
-	"github.com/RedGhoul/fibertodo/utils"
+	"fibertodo/controllers"
+	"fibertodo/literals"
+	"fibertodo/utils"
+
 	"github.com/gofiber/fiber/v2"
 )
 

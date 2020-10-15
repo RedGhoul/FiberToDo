@@ -1,13 +1,14 @@
 package controllers
 
 import (
-	"github.com/RedGhoul/fibertodo/repos"
-	"github.com/RedGhoul/fibertodo/utils"
+	"fibertodo/repos"
+	"fibertodo/utils"
+
 	"github.com/gofiber/fiber/v2"
 )
 
 func Show_Register_Form(c *fiber.Ctx) error {
-	utils.Render(c, "Auth/register", "layouts/main", fiber.Map{})
+	return utils.Render(c, "Auth/register", "layouts/main", fiber.Map{})
 }
 
 func Post_Register_Form(c *fiber.Ctx) error {
@@ -27,7 +28,7 @@ func Post_Register_Form(c *fiber.Ctx) error {
 }
 
 func Show_Login_Form(c *fiber.Ctx) error {
-	utils.Render(c, "Auth/login", "layouts/main", fiber.Map{})
+	return utils.Render(c, "Auth/login", "layouts/main", fiber.Map{})
 }
 
 func Post_Login_Form(c *fiber.Ctx) error {
@@ -40,6 +41,7 @@ func Post_Login_Form(c *fiber.Ctx) error {
 	} else {
 		c.SendString("The entered details do not match our records.")
 	}
+	return nil
 }
 
 func Logout(c *fiber.Ctx) error {

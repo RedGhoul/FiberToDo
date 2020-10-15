@@ -1,8 +1,8 @@
 package repos
 
 import (
-	"github.com/RedGhoul/fibertodo/database"
-	"github.com/RedGhoul/fibertodo/models"
+	"fibertodo/database"
+	"fibertodo/models"
 )
 
 func GetAll_TodoListItems_ByListId(listId int) []models.TodoListItem {

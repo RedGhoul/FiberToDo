@@ -3,10 +3,11 @@ package utils
 import (
 	"log"
 
-	"github.com/RedGhoul/fibertodo/literals"
-	"github.com/RedGhoul/fibertodo/models"
-	"github.com/RedGhoul/fibertodo/providers"
-	"github.com/RedGhoul/fibertodo/repos"
+	"fibertodo/literals"
+	"fibertodo/models"
+	"fibertodo/providers"
+	"fibertodo/repos"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -48,20 +49,18 @@ func GetUserId(c *fiber.Ctx) uint {
 }
 
 func CheckAuth() fiber.Handler {
-	return func(c *fiber.Ctx) {
+	return func(c *fiber.Ctx) error {
 		// Filter request to skip middleware
 		if providers.IsAuthenticated(c) {
-			c.Next()
-			return
+			return c.Next()
+
 		}
-		c.Redirect("/Login")
+		return c.Redirect("/Login")
 	}
 }
 
-func Render(c *fiber.Ctx, pageName string, layoutName string, data fiber.Map) {
+func Render(c *fiber.Ctx, pageName string, layoutName string, data fiber.Map) error {
 	data["signedIn"] = providers.IsAuthenticated(c)
 	data["sys"] = literals.SysRoutes
-	if err := c.Render(pageName, data, layoutName); err != nil {
-		c.Status(500)
-	}
+	return c.Render(pageName, data, layoutName)
 }

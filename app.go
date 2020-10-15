@@ -5,10 +5,11 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/RedGhoul/fibertodo/database"
-	"github.com/RedGhoul/fibertodo/middleware"
-	"github.com/RedGhoul/fibertodo/providers"
-	"github.com/RedGhoul/fibertodo/routes"
+	"fibertodo/database"
+	"fibertodo/middleware"
+	"fibertodo/providers"
+	"fibertodo/routes"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/session/v2"
 	"github.com/gofiber/template/django"
