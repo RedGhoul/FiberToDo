@@ -13,6 +13,9 @@ import (
 
 func MatchPasswords(username string, password string) (bool, *models.User) {
 	curuser := repos.GetUserByUsername(username)
+	if curuser.ID == 0 {
+		return false, nil
+	}
 	match, err := providers.HashProvider().MatchHash(password, curuser.Password)
 	if err != nil || match == false {
 		if err != nil {

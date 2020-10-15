@@ -1,8 +1,18 @@
-<script type="text/javascript" src="/asset/site.js"></script>
-<form action="{{sys.Createtodolist}}" method="post">
-  <div class="form-group">
-    <label for="todolistname">To Do List Name:</label>
-    <input type="text" class="form-control" id="todolistname" name="todolistname" placeholder="Enter Name Here">
+<section id="main">
+  <div class="child">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <form action="{{sys.Createtodolist}}" method="post">
+          <div class="form-group">
+            <label for="todolistname">To Do List Name:</label>
+            <input type="text" class="form-control" id="todolistname" name="todolistname" placeholder="Enter Name Here">
+          </div>
+          <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+        </form>
+      </div>
+      <div class="col-2"></div>
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
-</form>
+</section>
+

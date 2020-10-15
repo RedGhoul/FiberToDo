@@ -1,26 +1,38 @@
-<script  type="text/javascript" src="/asset/site.js"></script>
-<h1>A List of your todos</h1>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Created</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for todolist in todolists %} 
-    <tr>
 
-      <td>{{todolist.Title}}</td>
-      <td>{{todolist.CreatedAt.Format("2006-01-02")}}</td>
-      <td>
-        <a href="{{sys.Todolist}}/{{todolist.Model.ID}}">View</a>
-        <a href="{{sys.Updatetodolist}}/{{todolist.Model.ID}}">Update</a>
-        <a href="{{sys.Deletetodolist}}/{{todolist.Model.ID}}">Delete</a>
-      </td>
-    </tr>
-  {% endfor %}
-   
-  </tbody>
-</table>
+ <section id="main">
+    <div class="child">
+     <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+              <h2 style="text-center">A List of your todos</h2>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th colspan="12" scope="col">Title</th>
+                    <th colspan="6" scope="col">Created</th>
+                    <th colspan="12" scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for todolist in todolists %} 
+                  <tr>
+
+                    <td colspan="12">{{todolist.Title}}</td>
+                    <td colspan="6">{{todolist.CreatedAt.Format("2006-01-02")}}</td>
+                    <td colspan="12">
+                      <a href="{{sys.Todolist}}/{{todolist.Model.ID}}">View</a>
+                      <a href="{{sys.Updatetodolist}}/{{todolist.Model.ID}}">Update</a>
+                      <a href="{{sys.Deletetodolist}}/{{todolist.Model.ID}}">Delete</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                
+                </tbody>
+              </table>
+        </div>
+        <div class="col-2"></div>
+     </div>
+
+    </div>
+ </section>
+

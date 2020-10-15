@@ -21,6 +21,7 @@ func StartUp() {
 	providers.SetUpSessionProvider(session.New())
 	providers.SetUpHashProvider()
 	app := setupViewEngine()
+	app.Static("/", "./public")
 	middleware.SetupMiddleware(app)
 	routes.SetupRoutes(app)
 	setupAppListenPort(app)

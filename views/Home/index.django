@@ -1,4 +1,16 @@
-{% include "views/partials/header.django" %}
-<script  type="text/javascript" src="/asset/site.js"></script>
-<h1>{{Title}}</h1>
-{% include "views/partials/footer.django" %}
+
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+      <div class="row justify-content-center">
+        <div class="col-xl-7 col-lg-9 text-center">
+          <h1>Welcome To Todo List</h1>
+          <h2>One place to store all your todos</h2>
+        </div>
+      </div>
+      <div class="text-center">
+        <a href="{{sys.Login}}" class="btn-get-started scrollto">Get Started</a>
+      </div>
+      <div class="row icon-boxes">
+      </div>
+    </div>
+  </section>
