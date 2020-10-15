@@ -4,6 +4,7 @@ import (
 	"fibertodo/literals"
 	"fibertodo/repos"
 	"fibertodo/utils"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -41,6 +42,7 @@ func Post_Login_Form(c *fiber.Ctx) error {
 		return c.Redirect(literals.SysRoutes.Todolists)
 	} else {
 		//"The entered details do not match our records."
+		log.Fatal("The entered details do not match our records.")
 		return c.Redirect(literals.SysRoutes.Login)
 	}
 }
