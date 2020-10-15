@@ -7,7 +7,7 @@ import (
 	"github.com/RedGhoul/fibertodo/models"
 	"github.com/RedGhoul/fibertodo/providers"
 	"github.com/RedGhoul/fibertodo/repos"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 func MatchPasswords(username string, password string) (bool, *models.User) {
@@ -62,6 +62,6 @@ func Render(c *fiber.Ctx, pageName string, layoutName string, data fiber.Map) {
 	data["signedIn"] = providers.IsAuthenticated(c)
 	data["sys"] = literals.SysRoutes
 	if err := c.Render(pageName, data, layoutName); err != nil {
-		c.Status(500).Send(err.Error())
+		c.Status(500)
 	}
 }

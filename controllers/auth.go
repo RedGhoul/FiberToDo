@@ -3,19 +3,19 @@ package controllers
 import (
 	"github.com/RedGhoul/fibertodo/repos"
 	"github.com/RedGhoul/fibertodo/utils"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
-func Show_Register_Form(c *fiber.Ctx) {
+func Show_Register_Form(c *fiber.Ctx) error {
 	utils.Render(c, "Auth/register", "layouts/main", fiber.Map{})
 }
 
-func Post_Register_Form(c *fiber.Ctx) {
+func Post_Register_Form(c *fiber.Ctx) error {
 	username := c.FormValue("username")
 	password1 := c.FormValue("password")
 	password2 := c.FormValue("password2")
 	if password1 != password2 {
-		c.Send("Your passwords didn't match")
+		c.SendString("Your passwords didn't match")
 	}
 
 	if !repos.CheckIfUserExists(username) {
@@ -23,14 +23,14 @@ func Post_Register_Form(c *fiber.Ctx) {
 			c.Redirect("/Login")
 		}
 	}
-	return
+	return nil
 }
 
-func Show_Login_Form(c *fiber.Ctx) {
+func Show_Login_Form(c *fiber.Ctx) error {
 	utils.Render(c, "Auth/login", "layouts/main", fiber.Map{})
 }
 
-func Post_Login_Form(c *fiber.Ctx) {
+func Post_Login_Form(c *fiber.Ctx) error {
 	username := c.FormValue("username")
 	password := c.FormValue("password")
 	didmatch, curuser := utils.MatchPasswords(username, password)
@@ -38,13 +38,13 @@ func Post_Login_Form(c *fiber.Ctx) {
 		utils.SetAuthCookie(curuser, c)
 		c.Redirect("/TodoLists")
 	} else {
-		c.Send("The entered details do not match our records.")
+		c.SendString("The entered details do not match our records.")
 	}
 }
 
-func Logout(c *fiber.Ctx) {
+func Logout(c *fiber.Ctx) error {
 	if utils.RemoveCookie(c) {
 		c.Redirect("/")
 	}
-	c.Redirect(string(c.Fasthttp.Request.Header.Referer()))
+	return nil
 }

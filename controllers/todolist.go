@@ -5,7 +5,7 @@ import (
 
 	"github.com/RedGhoul/fibertodo/repos"
 	"github.com/RedGhoul/fibertodo/utils"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 var HomePage = "/TodoLists"
@@ -13,7 +13,7 @@ var HomePage = "/TodoLists"
 /*
 	Show a list of todo lists you have
 */
-func Show_List_Of_TodoLists(c *fiber.Ctx) {
+func Show_List_Of_TodoLists(c *fiber.Ctx) error {
 
 	if userID := utils.GetUserId(c); userID != 0 {
 		todolists := repos.GetAllTodoListsByUserId(userID)
@@ -27,7 +27,7 @@ func Show_List_Of_TodoLists(c *fiber.Ctx) {
 /*
 	Show a todo list
 */
-func Show_ToDoList(c *fiber.Ctx) {
+func Show_ToDoList(c *fiber.Ctx) error {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		todolist := repos.GetTodolistByIDAndUserId(uint(value), userID)
@@ -44,7 +44,7 @@ func Show_ToDoList(c *fiber.Ctx) {
 /*
 	Show update form for todo list
 */
-func Show_Update_ToDoList_Form(c *fiber.Ctx) {
+func Show_Update_ToDoList_Form(c *fiber.Ctx) error {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		todolist := repos.GetTodolistByID(uint(value))
@@ -59,7 +59,7 @@ func Show_Update_ToDoList_Form(c *fiber.Ctx) {
 /*
 	Update a todo list
 */
-func Update_ToDoList(c *fiber.Ctx) {
+func Update_ToDoList(c *fiber.Ctx) error {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		todolistname := c.FormValue("todolistname")
@@ -78,7 +78,7 @@ func Update_ToDoList(c *fiber.Ctx) {
 /*
 	Delete a todo list
 */
-func Delete_TodoList(c *fiber.Ctx) {
+func Delete_TodoList(c *fiber.Ctx) error {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		repos.DeleteTodoList(uint(value), userID)
@@ -90,7 +90,7 @@ func Delete_TodoList(c *fiber.Ctx) {
 /*
 	Create a todo list
 */
-func Create_ToDoList(c *fiber.Ctx) {
+func Create_ToDoList(c *fiber.Ctx) error {
 	todolistname := c.FormValue("todolistname")
 	if len(todolistname) == 0 {
 		c.Redirect("/CreateNewToDoList")
@@ -106,6 +106,6 @@ func Create_ToDoList(c *fiber.Ctx) {
 /*
 	Show create todolist form
 */
-func Show_Create_TodoList_Form(c *fiber.Ctx) {
+func Show_Create_TodoList_Form(c *fiber.Ctx) error {
 	utils.Render(c, "ToDoList/create", "layouts/main", fiber.Map{})
 }

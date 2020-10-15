@@ -4,7 +4,7 @@ import (
 	"github.com/RedGhoul/fibertodo/controllers"
 	"github.com/RedGhoul/fibertodo/literals"
 	"github.com/RedGhoul/fibertodo/utils"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 func SetupRoutes(app *fiber.App) {

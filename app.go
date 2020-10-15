@@ -9,8 +9,8 @@ import (
 	"github.com/RedGhoul/fibertodo/middleware"
 	"github.com/RedGhoul/fibertodo/providers"
 	"github.com/RedGhoul/fibertodo/routes"
-	"github.com/gofiber/fiber"
-	"github.com/gofiber/session"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/session/v2"
 	"github.com/gofiber/template/django"
 	"github.com/joho/godotenv"
 )
@@ -39,7 +39,7 @@ func setupViewEngine() *fiber.App {
 		engine.Debug(true)
 	}
 
-	return fiber.New(&fiber.Settings{
+	return fiber.New(fiber.Config{
 		Views: engine,
 	})
 }

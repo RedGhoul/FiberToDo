@@ -7,7 +7,7 @@ import (
 	"github.com/RedGhoul/fibertodo/models"
 	"github.com/RedGhoul/fibertodo/repos"
 	"github.com/RedGhoul/fibertodo/utils"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 // ToDoListItem
@@ -15,7 +15,7 @@ import (
 /*
 	Create a todo list item
 */
-func Create_ToDoList_Item(c *fiber.Ctx) {
+func Create_ToDoList_Item(c *fiber.Ctx) error {
 	if userID := utils.GetUserId(c); userID != 0 {
 		// Instantiate new Product struct
 		p := new(models.TodoListItemDto)
@@ -46,7 +46,7 @@ func Create_ToDoList_Item(c *fiber.Ctx) {
 /*
 	Delete a todo list item
 */
-func Delete_ToDoList_Item(c *fiber.Ctx) {
+func Delete_ToDoList_Item(c *fiber.Ctx) error {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		repos.TodoListItem_Delete(uint(value))
@@ -62,14 +62,14 @@ func Delete_ToDoList_Item(c *fiber.Ctx) {
 /*
 	Update a todo list item
 */
-func Update_ToDoList_Item(c *fiber.Ctx) {
+func Update_ToDoList_Item(c *fiber.Ctx) error {
 	c.Send("UpdateNewToDoListItem")
 }
 
 /*
 	Update a todo list item
 */
-func Mark_Done_ToDoList_Item(c *fiber.Ctx) {
+func Mark_Done_ToDoList_Item(c *fiber.Ctx) error {
 	if userID := utils.GetUserId(c); userID != 0 {
 		value, _ := strconv.Atoi(c.Params("Id"))
 		repos.TodoListItem_ToggleDone(uint(value))
