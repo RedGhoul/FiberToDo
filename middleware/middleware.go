@@ -11,6 +11,9 @@ import (
 	"github.com/gofiber/helmet/v2"
 )
 
+/*
+	Setting up middle ware for app
+*/
 func SetupMiddleware(app *fiber.App) {
 	app.Static("/", "./public")
 	app.Use(recover.New())
