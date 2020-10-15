@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fibertodo/literals"
 	"fibertodo/repos"
 	"fibertodo/utils"
 
@@ -16,15 +17,15 @@ func Post_Register_Form(c *fiber.Ctx) error {
 	password1 := c.FormValue("password")
 	password2 := c.FormValue("password2")
 	if password1 != password2 {
-		c.SendString("Your passwords didn't match")
+		return c.Redirect(literals.SysRoutes.Register)
 	}
 
 	if !repos.CheckIfUserExists(username) {
 		if repos.CreateUser(username, username, password1) {
-			c.Redirect("/Login")
+			return c.Redirect(literals.SysRoutes.Login)
 		}
 	}
-	return nil
+	return c.Redirect(literals.SysRoutes.Home)
 }
 
 func Show_Login_Form(c *fiber.Ctx) error {
@@ -37,16 +38,16 @@ func Post_Login_Form(c *fiber.Ctx) error {
 	didmatch, curuser := utils.MatchPasswords(username, password)
 	if didmatch {
 		utils.SetAuthCookie(curuser, c)
-		c.Redirect("/TodoLists")
+		return c.Redirect(literals.SysRoutes.Todolists)
 	} else {
-		c.SendString("The entered details do not match our records.")
+		//"The entered details do not match our records."
+		return c.Redirect(literals.SysRoutes.Login)
 	}
-	return nil
 }
 
 func Logout(c *fiber.Ctx) error {
 	if utils.RemoveCookie(c) {
-		c.Redirect("/")
+		return c.Redirect(literals.SysRoutes.Home)
 	}
-	return nil
+	return c.Redirect(c.Route().Path)
 }
