@@ -1,9 +1,7 @@
 package database
 
 import (
-	"fmt"
 	"log"
-	"net/url"
 	"os"
 	"strconv"
 	"time"
@@ -11,7 +9,7 @@ import (
 	"fibertodo/models"
 
 	"github.com/joho/godotenv"
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -41,19 +39,20 @@ func InitDb() {
 	}
 
 	var err error
-	dsn := url.URL{
-		User:     url.UserPassword(os.Getenv("DBUSER"), os.Getenv("DBPASSWORD")),
-		Scheme:   "postgres",
-		Host:     fmt.Sprintf("%s:%s", os.Getenv("DBHOST"), os.Getenv("DBPORT")),
-		Path:     os.Getenv("DBNAME"),
-		RawQuery: (&url.Values{"sslmode": []string{"disable"}}).Encode(),
-	}
+	// dsn := url.URL{
+	// 	User:     url.UserPassword(os.Getenv("DBUSER"), os.Getenv("DBPASSWORD")),
+	// 	Host:     fmt.Sprintf("%s:%s", os.Getenv("DBHOST"), os.Getenv("DBPORT")),
+	// 	Path:     os.Getenv("DBNAME"),
+	// 	RawQuery: (&url.Values{"sslmode": []string{"disable"}}).Encode(),
+	// }
+	dsn := os.Getenv("DBURL")
+
 	if DebugFlag {
-		DBConn, err = gorm.Open(postgres.Open(dsn.String()), &gorm.Config{
+		DBConn, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 			Logger: newLogger,
 		})
 	} else {
-		DBConn, err = gorm.Open(postgres.Open(dsn.String()), &gorm.Config{})
+		DBConn, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	}
 
 	if err != nil {
