@@ -19,11 +19,7 @@ var (
 )
 
 func InitDb() {
-	configErr := godotenv.Load()
-	if configErr != nil {
-		log.Fatal(configErr.Error())
-		log.Fatal("Error loading .env file")
-	}
+	godotenv.Load()
 
 	DebugFlag, _ := strconv.ParseBool(os.Getenv("DEBUG"))
 	var newLogger logger.Interface

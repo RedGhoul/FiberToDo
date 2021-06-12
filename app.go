@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 	"strconv"
 
@@ -30,10 +29,7 @@ func StartUp() {
 func setupViewEngine() *fiber.App {
 	engine := django.New("./views", ".django")
 
-	configErr := godotenv.Load()
-	if configErr != nil {
-		log.Fatal("Error loading .env file")
-	}
+	godotenv.Load()
 
 	DebugFlag, _ := strconv.ParseBool(os.Getenv("DEBUG"))
 	if DebugFlag {
