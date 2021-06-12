@@ -9,7 +9,7 @@ import (
 	"fibertodo/models"
 
 	"github.com/joho/godotenv"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -48,11 +48,11 @@ func InitDb() {
 	dsn := os.Getenv("DBURL")
 
 	if DebugFlag {
-		DBConn, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		DBConn, err = gorm.Open(sqlserver.Open(dsn), &gorm.Config{
 			Logger: newLogger,
 		})
 	} else {
-		DBConn, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		DBConn, err = gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
 	}
 
 	if err != nil {

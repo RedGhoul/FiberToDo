@@ -1,5 +1,15 @@
+ <style>
+  #Register {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    height: 600px;
+  }
 
-<form action="/Register" method="post">
+ </style>
+<section id="Register" class="d-flex align-items-center">
+<form action="/Register" method="post" >
   <h3>Register</h3>
   <div class="form-group">
     <label for="fname">Username:</label>
@@ -15,3 +25,6 @@
   </div>
   <input type="submit" class="btn btn-primary" value="Submit">
 </form> 
+
+</section>
+

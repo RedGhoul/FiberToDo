@@ -30,7 +30,7 @@ func Create_ToDoList_Item(c *fiber.Ctx) error {
 			})
 
 		}
-		createdItem := repos.Create_TodoListItem(p.Title, p.ListId)
+		createdItem := repos.Create_TodoListItem(p.Title, p.ListId, userID)
 		things := createdItem.CreatedAt.Format("2006-01-02")
 
 		return c.Status(200).JSON(&fiber.Map{

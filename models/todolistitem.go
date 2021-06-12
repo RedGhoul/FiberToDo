@@ -8,7 +8,7 @@ type TodoListItem struct {
 	gorm.Model
 	Title         string `josn:"title"`
 	Done          bool   `json:"done"`
-	Author        string `json:"author"`
+	UserRefer     uint   `json:"UserRefer"`
 	TodoListRefer uint   `json:"TodoListRefer"`
 }
 
