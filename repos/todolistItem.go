@@ -32,11 +32,7 @@ func TodoListItem_ToggleDone(itemId uint) bool {
 	if item.ID == 0 {
 		return false
 	}
-	if item.Done == true {
-		item.Done = false
-	} else {
-		item.Done = true
-	}
+	item.Done = !item.Done
 	db.Save(&item)
 	return true
 }

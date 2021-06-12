@@ -4,7 +4,7 @@
     flex-direction: column; 
     align-items: center;
     justify-content: center;
-    height: 600px;
+    height: 700px;
   }
 
  </style>
@@ -14,6 +14,10 @@
   <div class="form-group">
     <label for="fname">Username:</label>
     <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+  </div>
+    <div class="form-group">
+    <label for="fname">Email:</label>
+    <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
   </div>
   <div class="form-group">
     <label for="fname">Password:</label>

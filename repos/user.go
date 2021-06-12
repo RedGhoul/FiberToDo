@@ -33,14 +33,11 @@ func GetUserByUsername(username string) models.User {
 	return curUser
 }
 
-func CheckIfUserExists(username string) bool {
+func CheckIfUserExists(username string, email string) bool {
 	db := database.DBConn
 	var curUser models.User
-	db.Where("username = ?", username).First(&curUser)
-	if curUser.ID == 0 {
-		return false
-	}
-	return true
+	db.Where("username = ? AND email ?", username, email).First(&curUser)
+	return curUser.ID == 0
 }
 
 func CreateUser(username string, email string, password string) bool {
@@ -51,7 +48,7 @@ func CreateUser(username string, email string, password string) bool {
 		return false
 	}
 	var newUser models.User
-	newUser.Email = username
+	newUser.Email = email
 	newUser.Username = username
 	newUser.Password = newHash
 	db.Create(&newUser)

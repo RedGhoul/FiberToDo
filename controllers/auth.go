@@ -4,9 +4,11 @@ import (
 	"fibertodo/literals"
 	"fibertodo/repos"
 	"fibertodo/utils"
+	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/mcnijman/go-emailaddress"
 )
 
 func Show_Register_Form(c *fiber.Ctx) error {
@@ -15,14 +17,28 @@ func Show_Register_Form(c *fiber.Ctx) error {
 
 func Post_Register_Form(c *fiber.Ctx) error {
 	username := c.FormValue("username")
+	email := c.FormValue("email")
 	password1 := c.FormValue("password")
 	password2 := c.FormValue("password2")
 	if password1 != password2 {
 		return c.Redirect(literals.SysRoutes.Register)
 	}
+	valid_email, valid_email_error := emailaddress.Parse(email)
+	if valid_email_error != nil {
+		// invalid email naming convertions
+		fmt.Println("invalid email naming conventions")
+		return c.Redirect(literals.SysRoutes.Home)
+	}
 
-	if !repos.CheckIfUserExists(username) {
-		if repos.CreateUser(username, username, password1) {
+	valid_email_host_error := valid_email.ValidateHost()
+	if valid_email_host_error != nil {
+		// invalid host
+		fmt.Println("invalid host")
+		return c.Redirect(literals.SysRoutes.Home)
+	}
+
+	if !repos.CheckIfUserExists(username, email) {
+		if repos.CreateUser(username, email, password1) {
 			return c.Redirect(literals.SysRoutes.Login)
 		}
 	}
