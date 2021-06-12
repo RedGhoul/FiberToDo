@@ -14,7 +14,7 @@
 </head>
 <body>
 <header id="header" class="fixed-top">
-  {% include "views/partials/header.django" %}
+  {% include "partials/header.django" %}
 </header>
 
 {{embed}}
@@ -22,6 +22,6 @@
 
 </body>
 
-{% include "views/partials/footer.django" %}
+{% include "partials/footer.django" %}
 
 </html>
