@@ -43,6 +43,7 @@ func setup_TodoList(app *fiber.App) {
 }
 
 func setup_TodoListItem(app *fiber.App) {
+	app.Get(literals.SysRoutes.UpdateTodlistitemID, controllers.Show_Create_TodoList_Form)
 	app.Post(literals.SysRoutes.TodolistitemID, controllers.Create_ToDoList_Item)
 	app.Delete(literals.SysRoutes.TodolistitemID, controllers.Delete_ToDoList_Item)
 	app.Put(literals.SysRoutes.TodolistitemID, controllers.Update_ToDoList_Item)
