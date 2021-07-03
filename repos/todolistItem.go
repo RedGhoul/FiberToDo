@@ -24,6 +24,15 @@ func Create_TodoListItem(title string, listId uint, userId uint) models.TodoList
 	return newTodoListItem
 }
 
+func Get_Todolist_Item_By_ID_And_UserId(todoItemId uint, userId uint) models.TodoListItem {
+	db := database.DBConn
+	var todolistItem models.TodoListItem
+	db.Where("id = ? AND user_refer = ?",
+		todoItemId, userId).Find(&todolistItem)
+
+	return todolistItem
+}
+
 func TodoListItem_ToggleDone(itemId uint) bool {
 	db := database.DBConn
 

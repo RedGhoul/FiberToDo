@@ -63,7 +63,14 @@ func Delete_ToDoList_Item(c *fiber.Ctx) error {
 	Update a todo list item
 */
 func Update_ToDoList_Item(c *fiber.Ctx) error {
-	return c.SendString("UpdateNewToDoListItem")
+	if userID := utils.GetUserId(c); userID != 0 {
+		value, _ := strconv.Atoi(c.Params("Id"))
+		todoItem := repos.Get_Todolist_Item_By_ID_And_UserId(uint(value), userID)
+		return utils.Render(c, "TodoItem/update", "layouts/main", fiber.Map{"todoItem": todoItem})
+
+	} else {
+		return c.Redirect(HomePage)
+	}
 }
 
 /*

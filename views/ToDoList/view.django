@@ -29,36 +29,38 @@
 
                     <ul class="unordered list-group">
                         {% for item in todolist.ToDoListItems %} 
-                            {% if item.Done %}
-                            <li data-item-id="{{item.ID}}" class="list list-group-item completed">
+                           
+                            <li  class="list list-group-item">
                                 <div class="row">
-                                    <div class="col-9">
+                                    <div class="col-3">
                                         {{item.Title}}
                                     </div>
                                     <div class="col-2">
-                                        {{item.Model.CreatedAt.Format("2006-01-02")}}
+                                        {{item.CreatedAt.Format("2006-01-02")}}
                                     </div>
                                     <div class="col-1">
-                                        <span><i class="fa fa-trash"></i></span>
+                                        <a href="{{sys.UpdateTodlistitem}}/{{item.ID}}">Update</a>
+                                    </div>
+                                    <div class="col-1">
+                                     {% if item.Done %}
+                                        <div class="check">
+                                            <span data-item-id="{{item.ID}}"><i class="fa fa-check-circle-o"></i></span>
+                                        </div>
+                                     {% else %}
+                                        <div class="check">
+                                            <span data-item-id="{{item.ID}}"><i class="fa fa-check-circle"></i></span>
+                                        </div>
+                                     {% endif %}
+                                    </div>
+                                    <div class="col-1">
+                                        <div class="del">
+                                            <span data-item-id="{{item.ID}}"><i class="fa fa-trash"></i></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </li>
-                            {% else %}
-                            <li data-item-id="{{item.ID}}" class="list list-group-item">
-                            <div class="row">
-                                <div class="col-9">
-                                    {{item.Title}}
-                                </div>
-                                <div class="col-2">
-                                    {{item.CreatedAt.Format("2006-01-02")}}
-                                </div>
-                                <div class="col-1">
-                                    <span><i class="fa fa-trash"></i></span>
-                                </div>
-                            </div>
 
                             </li>
-                            {% endif %}
+
                         
                         {% endfor %}
                     
@@ -75,8 +77,14 @@
 
 <script>
 
-    var markAsCompleted = $(".unordered").on("click", "li", function () {
-        $(this).toggleClass("completed");
+    var markAsCompleted = $(".check").on("click", "span", function () {
+        var element =  $(this).find("i")[0];
+        if(element.className == "fa fa-check-circle"){
+            element.className = "fa fa-check-circle-o"
+        }else if(element.className == "fa fa-check-circle-o"){
+            element.className = "fa fa-check-circle"
+        }
+        
         var todolistItemId = $(this).data("item-id");
         $.ajax({
             url : "{{sys.TodolistitemDone}}/"+todolistItemId,
@@ -94,7 +102,7 @@
         });
     });
 
-    var deleteItemInList = $(".unordered").on('click', "span", function (e) {
+    var deleteItemInList = $(".del").on('click', "span", function (e) {
         e.stopPropagation();
         $(this).closest("li").fadeOut(500, function () {
             var todolistItemId =$(this).closest("li").data("item-id");
@@ -121,6 +129,7 @@
         if (e.which === 13) {
             var todoText = $(this).val();
             var todoListId = $("#ListId").val();
+            var sysValue = "{{sys.UpdateTodlistitem}}/{{item.ID}}"
             if(todoText.length > 0){
                 $.ajax({
                     url : "{{sys.Todolistitem}}/"+todoListId,
@@ -132,18 +141,29 @@
                     success: function(data, textStatus, jqXHR)
                     {
                         $(".unordered").append(`
-                             <li data-item-id="${data.id}" class="list list-group-item">
+                            <li  class="list list-group-item">
                                 <div class="row">
-                                    <div class="col-9">
+                                    <div class="col-3">
                                         ${todoText}
                                     </div>
                                     <div class="col-2">
-                                       ${data.create_at}
+                                        ${data.create_at}
                                     </div>
                                     <div class="col-1">
-                                        <span><i class="fa fa-trash"></i></span>
+                                        <a href="${sysValue}">Update</a>
+                                    </div>
+                                    <div class="col-1">
+                                        <div class="check">
+                                            <span data-item-id="${data.id}"><i class="fa fa-check-circle-o"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-1">
+                                        <div class="del">
+                                            <span data-item-id="${data.id}"><i class="fa fa-trash"></i></span>
+                                        </div>
                                     </div>
                                 </div>
+
                             </li>
                         `);
                 

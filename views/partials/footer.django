@@ -3,7 +3,7 @@
 
       <div class="mr-md-auto text-center text-md-left">
         <div class="credits">
-          Designed by <a href="https://avaneesa.me/">Avaneesa</a>
+          Designed by <a href="https://avaneesa.com/">Avaneesa</a>
         </div>
       </div>
       <div class="social-links text-center text-md-right pt-3 pt-md-0">
@@ -15,9 +15,8 @@
                 data-sharpcounter-apikey="e7d80dfb-22c3-4530-a234-635d87fe98f8"></script>
       <script>
 
-          var notificationMadeBy = alertify.message('Created by Avaneesa Basappa', 10000);
-          notificationMadeBy.ondismiss = function () { return true; };
-          var notificationCheckMeOut = alertify.message('Check me out at <a href="https://www.avaneesa.me/">avaneesa.me</a>', 10000);
+   
+          var notificationCheckMeOut = alertify.message('Check me out at <a href="https://avaneesa.com/">avaneesa.com</a>', 10000);
           notificationCheckMeOut.ondismiss = function () { return true; };
        
       </script>
