@@ -33,6 +33,16 @@ func Get_Todolist_Item_By_ID_And_UserId(todoItemId uint, userId uint) models.Tod
 	return todolistItem
 }
 
+func Update_Todolist_Item(todoItemId uint, userId uint, title string) models.TodoListItem {
+	db := database.DBConn
+	var todolistItem models.TodoListItem
+	db.Where("id = ? AND user_refer = ?",
+		todoItemId, userId).Find(&todolistItem)
+	todolistItem.Title = title
+	db.Model(&todolistItem).Update("title", title)
+	return todolistItem
+}
+
 func TodoListItem_ToggleDone(itemId uint) bool {
 	db := database.DBConn
 

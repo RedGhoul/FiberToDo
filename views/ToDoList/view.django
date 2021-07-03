@@ -7,13 +7,15 @@
     .list.list-group-item {
         cursor: pointer;
     }
+    .child {
+        padding-top: 150px;
+    }
 </style>
-<div id="main">
+
     
     <div class="child">
         <div class="row">
-                <div class="col-2"></div>
-                <div class="col-8">
+                <div class="col-12">
                     <div class="row">
                         <div class="col-12">
                             <h1>{{todolist.Title}}</h1>
@@ -35,13 +37,10 @@
                                     <div class="col-3">
                                         {{item.Title}}
                                     </div>
-                                    <div class="col-2">
-                                        {{item.CreatedAt.Format("2006-01-02")}}
-                                    </div>
-                                    <div class="col-1">
+                                    <div class="col-3">
                                         <a href="{{sys.UpdateTodlistitem}}/{{item.ID}}">Update</a>
                                     </div>
-                                    <div class="col-1">
+                                    <div class="col-2" style="text-align: center;">
                                      {% if item.Done %}
                                         <div class="check">
                                             <span data-item-id="{{item.ID}}"><i class="fa fa-check-circle-o"></i></span>
@@ -68,13 +67,9 @@
 
 
                 </div>
-                <div class="col-2"></div>
         </div>
 
     </div>
-
-</div>
-
 <script>
 
     var markAsCompleted = $(".check").on("click", "span", function () {

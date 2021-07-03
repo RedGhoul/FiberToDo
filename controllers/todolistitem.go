@@ -4,6 +4,7 @@ import (
 	"log"
 	"strconv"
 
+	"fibertodo/literals"
 	"fibertodo/models"
 	"fibertodo/repos"
 	"fibertodo/utils"
@@ -78,10 +79,11 @@ func Show_ToDoList_Item_Form(c *fiber.Ctx) error {
 */
 func Update_ToDoList_Item(c *fiber.Ctx) error {
 	if userID := utils.GetUserId(c); userID != 0 {
-		value, _ := strconv.Atoi(c.Params("Id"))
-		todoItem := repos.Get_Todolist_Item_By_ID_And_UserId(uint(value), userID)
-		return utils.Render(c, "TodoItem/update", "layouts/main", fiber.Map{"todoItem": todoItem})
-
+		item_id, _ := strconv.Atoi(c.Params("Id"))
+		new_item_name := c.FormValue("todolistitemname")
+		todoItem := repos.Update_Todolist_Item(uint(item_id), userID, new_item_name)
+		list_id := strconv.Itoa(int(todoItem.TodoListRefer))
+		return c.Redirect(literals.SysRoutes.Todolist + "/" + list_id)
 	} else {
 		return c.Redirect(HomePage)
 	}

@@ -1,34 +1,42 @@
-    <div class="container d-flex align-items-center">
 
-      <h1 class="logo mr-auto"><a href="{{sys.Home}}">TodoList</a></h1>
 
-      <nav class="nav-menu d-none d-lg-block">
-        <ul>
-            <li class="nav-item" >
-              <a class="nav-link" href="{{sys.Home}}">Home</a>
-            </li>
-            {% if signedIn %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{sys.Todolists}}">TodoLists</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{sys.Createtodolist}}">Create New TodoList</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{sys.Logout}}">Logout</a>
-            </li>
-          {% else %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="{{sys.Home}}">TodoList</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{sys.Home}}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          {% if signedIn %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{sys.Todolists}}">TodoLists</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{sys.Createtodolist}}">New</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{sys.Logout}}">Logout</a>
+                </li>
+              {% else %}
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{{sys.Login}}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{sys.Register}}">Register</a>
+              </li>
+              {% endif %}
           
-          <li class="nav-item">
-            <a class="nav-link" href="{{sys.Login}}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{sys.Register}}">Register</a>
-          </li>
-          {% endif %}
         </ul>
-      </nav>
-    </div>
+      
+      </div>
+    </nav>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
