@@ -14,7 +14,7 @@ require (
 	github.com/mcnijman/go-emailaddress v1.1.0
 	github.com/thomasvvugt/fiber-hashing v0.0.0-20200511145001-a62bb48860d5
 	golang.org/x/net v0.0.0-20210610132358-84b48f89b13b // indirect
-	golang.org/x/sys v0.0.0-20210611083646-a4fc73990273 // indirect
+	golang.org/x/sys v0.1.0 // indirect
 	gorm.io/driver/sqlserver v1.0.7
 	gorm.io/gorm v1.21.10
 )
